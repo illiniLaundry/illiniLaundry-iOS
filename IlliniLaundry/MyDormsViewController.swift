@@ -1,4 +1,5 @@
 //
+
 //  MyDormsViewController.swift
 //  IlliniLaundry
 //
@@ -10,6 +11,7 @@ import UIKit
 import XLPagerTabStrip
 
 class MyDormsViewController: UIViewController, IndicatorInfoProvider{
+    @IBOutlet weak var MyDormsButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad();
     }
@@ -20,5 +22,10 @@ class MyDormsViewController: UIViewController, IndicatorInfoProvider{
     
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
         return IndicatorInfo(title: "My Dorms")
+    }
+    
+    @IBAction func DormView(_ sender: Any) {
+        let dormView = UIStoryboard(name:"GenericDorm", bundle: nil).instantiateViewController(withIdentifier: "GenericDormViewController");
+        self.present(dormView, animated:true, completion:nil);
     }
 }

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Wa5-Cf-dFI">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Generic Dorm View Controller-->
+        <scene sceneID="VoP-9f-ihj">
+            <objects>
+                <tableViewController storyboardIdentifier="GenericDormViewController" id="Wa5-Cf-dFI" customClass="GenericDormViewController" customModule="IlliniLaundry" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="htk-S2-jH8">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="kvi-LA-RJK">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="300"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="header_Sample" translatesAutoresizingMaskIntoConstraints="NO" id="EzR-B9-2aV">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="300"/>
+                                </imageView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sample Dorm" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7BJ-si-c6X">
+                                    <rect key="frame" x="20" y="20" width="154.5" height="29"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstItem="7BJ-si-c6X" firstAttribute="top" secondItem="kvi-LA-RJK" secondAttribute="top" constant="20" id="CD4-Mf-Le0"/>
+                                <constraint firstAttribute="trailing" secondItem="EzR-B9-2aV" secondAttribute="trailing" id="Ghs-fI-cKs"/>
+                                <constraint firstItem="EzR-B9-2aV" firstAttribute="leading" secondItem="kvi-LA-RJK" secondAttribute="leading" id="ISj-l6-gdP"/>
+                                <constraint firstAttribute="bottom" secondItem="EzR-B9-2aV" secondAttribute="bottom" id="SzM-ki-zf8"/>
+                                <constraint firstItem="EzR-B9-2aV" firstAttribute="top" secondItem="kvi-LA-RJK" secondAttribute="top" id="k0h-Bc-CFa"/>
+                                <constraint firstItem="7BJ-si-c6X" firstAttribute="leading" secondItem="kvi-LA-RJK" secondAttribute="leading" constant="20" id="kUE-fa-8YP"/>
+                            </constraints>
+                        </view>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="xL8-El-VSt">
+                                <rect key="frame" x="0.0" y="328" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xL8-El-VSt" id="K1n-Kj-Vq4">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Laundry Machine" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WX0-TY-3DF">
+                                            <rect key="frame" x="5" y="5" width="132" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="WX0-TY-3DF" firstAttribute="top" secondItem="K1n-Kj-Vq4" secondAttribute="top" constant="5" id="Zss-He-CtW"/>
+                                        <constraint firstItem="WX0-TY-3DF" firstAttribute="leading" secondItem="K1n-Kj-Vq4" secondAttribute="leading" constant="5" id="r81-Tf-9Rx"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Wa5-Cf-dFI" id="WoQ-OG-Ldn"/>
+                            <outlet property="delegate" destination="Wa5-Cf-dFI" id="iG7-aN-giU"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bqJ-db-tJN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-168" y="21"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="header_Sample" width="1040" height="710"/>
+    </resources>
+</document>
