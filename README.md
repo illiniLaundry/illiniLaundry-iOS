@@ -31,6 +31,7 @@ $ open IlliniLaundry.xcworkspace
 
 1. [AllDormsViewController] (#AllDormsViewController)
 2. [MyDormsViewController] (#MyDormsViewController)
+
 ### AllDormsViewController
 Displays all dorms in a scrollview, three dorms per row.
 ### MyDormsViewController
