@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 import SwiftyJSON
 
-class GenericDormViewController: UITableViewController {
+class GenericDormViewController: UITableViewController, NSFetchedResultsControllerDelegate {
     
     let kTableHeaderHeight: CGFloat = 300.0;
     
@@ -18,7 +18,7 @@ class GenericDormViewController: UITableViewController {
     var headerView: UIView!;
     var hideStatusBar: Bool = false;
     var container: NSPersistentContainer!;
-    
+    var fetchedResultsController: NSFetchedResultsController<DormStatus>!;
     var dorms = [DormStatus]();
     
     @IBOutlet weak var dormImageView: UIImageView!;
@@ -27,8 +27,6 @@ class GenericDormViewController: UITableViewController {
         super.viewDidLoad();
         self.tableView.delegate = self;
         self.tableView.dataSource = self;
-        
-        
         loadPersistentStores();
         
         headerView = tableView.tableHeaderView;
@@ -40,6 +38,8 @@ class GenericDormViewController: UITableViewController {
         tableView.contentOffset = CGPoint(x: 0, y: -kTableHeaderHeight);
         updateHeaderView();
         performSelector(inBackground: #selector(fetchLaundryStatus), with: nil)
+        
+        clear();
         loadSavedData();
         
         
@@ -130,19 +130,32 @@ class GenericDormViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dorms.count;
+        if(fetchedResultsController == nil) {
+            return 1;
+        }
+        return (fetchedResultsController.fetchedObjects?.count)!;
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LaundryMachineCell", for: indexPath) as! LaundryMachineCell;
         
-        let dorm = dorms[indexPath.row];
+        let dorm = fetchedResultsController.object(at: indexPath)
         cell.DormNameLabel.text = dorm.name;
         return cell;
     }
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         updateHeaderView()
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        switch type {
+        case .delete:
+            tableView.deleteRows(at: [indexPath!], with: .automatic)
+            
+        default:
+            break
+        }
     }
     
     func updateHeaderView() {
@@ -157,16 +170,43 @@ class GenericDormViewController: UITableViewController {
     }
     
     func loadSavedData() {
-        let request = DormStatus.createFetchRequest()
-        let sort = NSSortDescriptor(key: "name", ascending: true)
-        request.sortDescriptors = [sort]
+        let managedContext = container.viewContext;
+        
+        if fetchedResultsController == nil {
+            let request = DormStatus.createFetchRequest();
+            let sort = NSSortDescriptor(key: "name", ascending: true);
+            request.sortDescriptors = [sort];
+            request.fetchBatchSize = 20;
+            
+            fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: managedContext, sectionNameKeyPath: nil, cacheName: nil);
+            fetchedResultsController.delegate = self;
+        }
         
         do {
-            dorms = try container.viewContext.fetch(request)
-            print("Got \(dorms.count) dorms")
-            tableView.reloadData()
+            try fetchedResultsController.performFetch();
+            tableView.reloadData();
+            print("table reloaded");
         } catch {
-            print("Fetch failed")
+            print("Fetch failed");
+        }
+    }
+    
+    func clear() {
+        let context = container.viewContext
+        
+        for i in 0...container.managedObjectModel.entities.count-1 {
+            let entity = container.managedObjectModel.entities[i]
+            
+            do {
+                let query = NSFetchRequest<NSFetchRequestResult>(entityName: entity.name!)
+                let deleterequest = NSBatchDeleteRequest(fetchRequest: query)
+                try context.execute(deleterequest)
+                try context.save()
+                
+            } catch let error as NSError {
+                print("Error: \(error.localizedDescription)")
+                abort()
+            }
         }
     }
 
