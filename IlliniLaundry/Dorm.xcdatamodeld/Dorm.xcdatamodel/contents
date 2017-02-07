@@ -15,7 +15,7 @@
         <relationship name="dormMachines" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="DormMachines" syncable="YES"/>
     </entity>
     <elements>
-        <element name="DormStatus" positionX="-63" positionY="-18" width="128" height="105"/>
         <element name="DormMachines" positionX="-54" positionY="18" width="128" height="135"/>
+        <element name="DormStatus" positionX="-36" positionY="54" width="128" height="105"/>
     </elements>
 </model>

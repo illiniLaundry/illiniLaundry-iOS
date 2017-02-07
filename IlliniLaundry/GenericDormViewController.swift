@@ -45,19 +45,27 @@ class GenericDormViewController: UITableViewController {
     func fetchLaundryStatus() {
         if let data = try? Data(contentsOf: URL(string: "http://23.23.147.128/homes/mydata/urba7723")!) {
             let jsonUIUC = JSON(data: data)
-            let dormJSONArray = jsonUIUC.
+            let dormJSONArray = jsonUIUC["rooms"].arrayValue;
             
             
             DispatchQueue.main.async { [unowned self] in
-                for jsonCommit in jsonCommitArray {
-                    // more code to go here!
+                for dormJSON in dormJSONArray {
+                    let dormStatus = DormStatus(context: self.container.viewContext);
+                  
+                    self.configure(dormStatus: dormStatus, usingJSON: dormJSON);
                 }
                 
                 self.saveContext()
             }
         }
     }
-    
+    func configure(dormStatus: DormStatus,
+                   usingJSON dormJson: JSON) {
+        dormStatus.id = dormJson["id"].int16Value;
+        dormStatus.name = dormJson["name"].stringValue;
+        dormStatus.networked = dormJson["networked"].stringValue;
+        dormStatus.dormMachines = dormJson["machines"];
+    }
     func loadPersistentStores() {
         container = NSPersistentContainer(name: "Dorm");
         container.loadPersistentStores { (storeDescription, error) in
