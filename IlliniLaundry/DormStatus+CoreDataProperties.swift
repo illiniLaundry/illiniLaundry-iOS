@@ -12,7 +12,7 @@ import CoreData
 
 extension DormStatus {
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<DormStatus> {
+    @nonobjc public class func createFetchRequest() -> NSFetchRequest<DormStatus> {
         return NSFetchRequest<DormStatus>(entityName: "DormStatus");
     }
 

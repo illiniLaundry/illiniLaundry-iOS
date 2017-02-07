@@ -12,7 +12,7 @@ import CoreData
 
 extension DormMachines {
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<DormMachines> {
+    @nonobjc public class func createFetchRequest() -> NSFetchRequest<DormMachines> {
         return NSFetchRequest<DormMachines>(entityName: "DormMachines");
     }
 
@@ -20,7 +20,7 @@ extension DormMachines {
     @NSManaged public var label: Int16
     @NSManaged public var description_: String?
     @NSManaged public var status: String?
-    @NSManaged public var startTime: NSObject?
+    @NSManaged public var startTime: Date?
     @NSManaged public var timeRemaining: Int16
 
 }

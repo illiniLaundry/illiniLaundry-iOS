@@ -9,6 +9,7 @@
 import UIKit
 
 class LaundryMachineCell: UITableViewCell {
+    @IBOutlet weak var DormNameLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib();
     }

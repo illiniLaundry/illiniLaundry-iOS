@@ -19,6 +19,8 @@ class GenericDormViewController: UITableViewController {
     var hideStatusBar: Bool = false;
     var container: NSPersistentContainer!;
     
+    var dorms = [DormStatus]();
+    
     @IBOutlet weak var dormImageView: UIImageView!;
     @IBOutlet weak var dormNameLabel: UILabel!;
     override func viewDidLoad() {
@@ -38,6 +40,7 @@ class GenericDormViewController: UITableViewController {
         tableView.contentOffset = CGPoint(x: 0, y: -kTableHeaderHeight);
         updateHeaderView();
         performSelector(inBackground: #selector(fetchLaundryStatus), with: nil)
+        loadSavedData();
         
         
     }
@@ -45,26 +48,57 @@ class GenericDormViewController: UITableViewController {
     func fetchLaundryStatus() {
         if let data = try? Data(contentsOf: URL(string: "http://23.23.147.128/homes/mydata/urba7723")!) {
             let jsonUIUC = JSON(data: data)
-            let dormJSONArray = jsonUIUC["rooms"].arrayValue;
+            let dormJSONArray = jsonUIUC["location"]["rooms"].arrayValue;
             
             
             DispatchQueue.main.async { [unowned self] in
-                for dormJSON in dormJSONArray {
+                for dormJSON in dormJSONArray{
                     let dormStatus = DormStatus(context: self.container.viewContext);
                   
                     self.configure(dormStatus: dormStatus, usingJSON: dormJSON);
+                    print("pulled dormJSON");
                 }
-                
-                self.saveContext()
+                print("debug statement in fetch laundry status");
+                self.saveContext();
+                self.loadSavedData();
             }
         }
     }
     func configure(dormStatus: DormStatus,
-                   usingJSON dormJson: JSON) {
+                   usingJSON dormJson: JSON){
         dormStatus.id = dormJson["id"].int16Value;
         dormStatus.name = dormJson["name"].stringValue;
         dormStatus.networked = dormJson["networked"].stringValue;
-        dormStatus.dormMachines = dormJson["machines"];
+        dormStatus.dormMachines = configure(usingJSON: dormJson["machines"]);
+        print(dormStatus);
+        print("configured dorm status");
+    }
+    
+    func configure(usingJSON dormMachinesJson: JSON) -> NSMutableOrderedSet{
+        let dormMachinesMutableSet = NSMutableOrderedSet();
+        
+        let max = dormMachinesJson.arrayValue.count;
+        
+        
+        let managedContext = container.viewContext;
+
+        for _ in 1...max {
+            let dormMachines = NSEntityDescription.insertNewObject(forEntityName: "DormMachines", into: managedContext) as? DormMachines;
+            dormMachines?.port = dormMachinesJson["port"].int16Value;
+            dormMachines?.label = dormMachinesJson["label"].int16Value;
+            dormMachines?.description_ = dormMachinesJson["description"].stringValue;
+            dormMachines?.status = dormMachinesJson["status"].stringValue;
+            
+            let formatter = ISO8601DateFormatter();
+            dormMachines?.startTime = formatter.date(from: dormMachinesJson["startTime"].stringValue) ?? Date();
+            
+            dormMachines?.timeRemaining = dormMachinesJson["timeRemaining"].int16Value;
+            dormMachinesMutableSet.add(dormMachines!);
+            print("add dormMachine");
+        }
+        print("configured dorm status");
+        return dormMachinesMutableSet;
+        
     }
     func loadPersistentStores() {
         container = NSPersistentContainer(name: "Dorm");
@@ -96,11 +130,14 @@ class GenericDormViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 40;
+        return dorms.count;
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LaundryMachineCell", for: indexPath) as! LaundryMachineCell;
+        
+        let dorm = dorms[indexPath.row];
+        cell.DormNameLabel.text = dorm.name;
         return cell;
     }
     
@@ -117,6 +154,20 @@ class GenericDormViewController: UITableViewController {
         
         headerView.frame = headerRect
 
+    }
+    
+    func loadSavedData() {
+        let request = DormStatus.createFetchRequest()
+        let sort = NSSortDescriptor(key: "name", ascending: true)
+        request.sortDescriptors = [sort]
+        
+        do {
+            dorms = try container.viewContext.fetch(request)
+            print("Got \(dorms.count) dorms")
+            tableView.reloadData()
+        } catch {
+            print("Fetch failed")
+        }
     }
 
 }

@@ -61,6 +61,9 @@
                                         <constraint firstItem="WX0-TY-3DF" firstAttribute="leading" secondItem="K1n-Kj-Vq4" secondAttribute="leading" constant="5" id="r81-Tf-9Rx"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="DormNameLabel" destination="WX0-TY-3DF" id="g5i-b4-5GQ"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
