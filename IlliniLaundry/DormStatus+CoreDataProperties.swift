@@ -2,7 +2,7 @@
 //  DormStatus+CoreDataProperties.swift
 //  IlliniLaundry
 //
-//  Created by Minhyuk Park on 07/02/2017.
+//  Created by Minhyuk Park on 08/02/2017.
 //  Copyright © 2017 Minhyuk Park. All rights reserved.
 //
 
@@ -17,9 +17,9 @@ extension DormStatus {
     }
 
     @NSManaged public var id: Int16
-    @NSManaged public var name: String?
-    @NSManaged public var networked: String?
-    @NSManaged public var dormMachines: NSOrderedSet?
+    @NSManaged public var name: String
+    @NSManaged public var networked: String
+    @NSManaged public var dormMachines: NSMutableOrderedSet
 
 }
 

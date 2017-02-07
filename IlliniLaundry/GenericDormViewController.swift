@@ -18,7 +18,6 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
     var headerView: UIView!;
     var hideStatusBar: Bool = false;
     var container: NSPersistentContainer!;
-    var fetchedResultsController: NSFetchedResultsController<DormStatus>!;
     var dorms = [DormStatus]();
     
     @IBOutlet weak var dormImageView: UIImageView!;
@@ -27,7 +26,13 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
         super.viewDidLoad();
         self.tableView.delegate = self;
         self.tableView.dataSource = self;
-        loadPersistentStores();
+        container = NSPersistentContainer(name: "Dorm");
+        container.loadPersistentStores { (storeDescription, error) in
+            self.container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy;
+            if let error = error {
+                print("Unresolved error \(error)");
+            }
+        }
         
         headerView = tableView.tableHeaderView;
         tableView.tableHeaderView = nil;
@@ -39,7 +44,7 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
         updateHeaderView();
         performSelector(inBackground: #selector(fetchLaundryStatus), with: nil)
         
-        clear();
+//        clear();
         loadSavedData();
         
         
@@ -66,10 +71,10 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
     }
     func configure(dormStatus: DormStatus,
                    usingJSON dormJson: JSON){
-        dormStatus.id = dormJson["id"].int16Value;
+//        dormStatus.id = dormJson["id"].int16Value;
         dormStatus.name = dormJson["name"].stringValue;
-        dormStatus.networked = dormJson["networked"].stringValue;
-        dormStatus.dormMachines = configure(usingJSON: dormJson["machines"]);
+//        dormStatus.networked = dormJson["networked"].stringValue;
+//        dormStatus.dormMachines = configure(usingJSON: dormJson["machines"]);
         print(dormStatus);
         print("configured dorm status");
     }
@@ -100,14 +105,6 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
         return dormMachinesMutableSet;
         
     }
-    func loadPersistentStores() {
-        container = NSPersistentContainer(name: "Dorm");
-        container.loadPersistentStores { (storeDescription, error) in
-            if let error = error {
-                print("Unresolved error \(error)");
-            }
-        }
-    }
     
     func saveContext() {
         if container.viewContext.hasChanges {
@@ -130,16 +127,13 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if(fetchedResultsController == nil) {
-            return 1;
-        }
-        return (fetchedResultsController.fetchedObjects?.count)!;
+        return dorms.count;
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LaundryMachineCell", for: indexPath) as! LaundryMachineCell;
         
-        let dorm = fetchedResultsController.object(at: indexPath)
+        let dorm = dorms[indexPath.row];
         cell.DormNameLabel.text = dorm.name;
         return cell;
     }
@@ -170,20 +164,13 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
     }
     
     func loadSavedData() {
-        let managedContext = container.viewContext;
         
-        if fetchedResultsController == nil {
-            let request = DormStatus.createFetchRequest();
-            let sort = NSSortDescriptor(key: "name", ascending: true);
-            request.sortDescriptors = [sort];
-            request.fetchBatchSize = 20;
-            
-            fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: managedContext, sectionNameKeyPath: nil, cacheName: nil);
-            fetchedResultsController.delegate = self;
-        }
+        let request = DormStatus.createFetchRequest();
+        let sort = NSSortDescriptor(key: "name", ascending: true);
+        request.sortDescriptors = [sort];
         
         do {
-            try fetchedResultsController.performFetch();
+            dorms = try container.viewContext.fetch(request);
             tableView.reloadData();
             print("table reloaded");
         } catch {

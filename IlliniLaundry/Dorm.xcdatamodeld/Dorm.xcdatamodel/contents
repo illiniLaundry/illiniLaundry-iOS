@@ -13,6 +13,11 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="networked" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="dormMachines" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="DormMachines" syncable="YES"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="name"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
     </entity>
     <elements>
         <element name="DormMachines" positionX="-54" positionY="18" width="128" height="135"/>
