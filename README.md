@@ -30,10 +30,17 @@ $ open IlliniLaundry.xcworkspace
 ## Pages
 
 1. [AllDormsViewController] (#AllDormsViewController)
+Display all dorms
 2. [MyDormsViewController] (#MyDormsViewController)
+Display my dorms
+3. [GenericDormViewController] (#GenericDormViewController)
+Display laundry status of one dorm
 
 ### AllDormsViewController
 Displays all dorms in a scrollview, three dorms per row.
 ### MyDormsViewController
 Displays all dorms that the user has favorited in a scrollview, one dorm per row.
+### GenericDormViewController
+Displays all laundry and dryer machines and their status in a scrollview.
+This view is generic and programmatically populated during runtime as needed.
 
