@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import CoreData
+import SwiftyJSON
 
 class GenericDormViewController: UITableViewController {
     
@@ -15,6 +17,7 @@ class GenericDormViewController: UITableViewController {
     var previousScrollOffset: CGFloat = 0;
     var headerView: UIView!;
     var hideStatusBar: Bool = false;
+    var container: NSPersistentContainer!;
     
     @IBOutlet weak var dormImageView: UIImageView!;
     @IBOutlet weak var dormNameLabel: UILabel!;
@@ -22,6 +25,9 @@ class GenericDormViewController: UITableViewController {
         super.viewDidLoad();
         self.tableView.delegate = self;
         self.tableView.dataSource = self;
+        
+        
+        loadPersistentStores();
         
         headerView = tableView.tableHeaderView;
         tableView.tableHeaderView = nil;
@@ -31,6 +37,44 @@ class GenericDormViewController: UITableViewController {
         tableView.contentInset = UIEdgeInsetsMake(kTableHeaderHeight, 0, 0, 0);
         tableView.contentOffset = CGPoint(x: 0, y: -kTableHeaderHeight);
         updateHeaderView();
+        performSelector(inBackground: #selector(fetchLaundryStatus), with: nil)
+        
+        
+    }
+    
+    func fetchLaundryStatus() {
+        if let data = try? Data(contentsOf: URL(string: "http://23.23.147.128/homes/mydata/urba7723")!) {
+            let jsonUIUC = JSON(data: data)
+            let dormJSONArray = jsonUIUC.
+            
+            
+            DispatchQueue.main.async { [unowned self] in
+                for jsonCommit in jsonCommitArray {
+                    // more code to go here!
+                }
+                
+                self.saveContext()
+            }
+        }
+    }
+    
+    func loadPersistentStores() {
+        container = NSPersistentContainer(name: "Dorm");
+        container.loadPersistentStores { (storeDescription, error) in
+            if let error = error {
+                print("Unresolved error \(error)");
+            }
+        }
+    }
+    
+    func saveContext() {
+        if container.viewContext.hasChanges {
+            do {
+                try container.viewContext.save()
+            } catch {
+                print("An error occurred while saving: \(error)");
+            }
+        }
     }
     
     

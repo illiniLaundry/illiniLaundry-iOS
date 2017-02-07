@@ -6,6 +6,8 @@ target 'IlliniLaundry' do
   use_frameworks!
   pod 'XLPagerTabStrip', :git=>
   'https://github.com/KelvinJin/XLPagerTabStrip', :branch => 'swift3'
+  pod 'SwiftyJSON', :git=>
+  'https://github.com/SwiftyJSON/SwiftyJSON.git'
 
   # Pods for IlliniLaundry
 

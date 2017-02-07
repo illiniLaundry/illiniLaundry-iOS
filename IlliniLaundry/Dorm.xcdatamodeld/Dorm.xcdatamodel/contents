@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11759" systemVersion="16D32" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="DormMachines" representedClassName="DormMachines" syncable="YES">
+        <attribute name="description_" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="label" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="port" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="startTime" optional="YES" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="timeRemaining" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+    </entity>
+    <entity name="DormStatus" representedClassName="DormStatus" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="networked" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="dormMachines" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="DormMachines" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="DormStatus" positionX="-63" positionY="-18" width="128" height="105"/>
+        <element name="DormMachines" positionX="-54" positionY="18" width="128" height="135"/>
+    </elements>
+</model>
