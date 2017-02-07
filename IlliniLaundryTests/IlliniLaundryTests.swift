@@ -6,6 +6,7 @@
 //  Copyright © 2017 Minhyuk Park. All rights reserved.
 //
 
+// MARK: add test cases
 import XCTest
 @testable import IlliniLaundry
 
