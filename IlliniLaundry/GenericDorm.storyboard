@@ -68,6 +68,10 @@
                             <outlet property="delegate" destination="Wa5-Cf-dFI" id="iG7-aN-giU"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <outlet property="dormImageView" destination="EzR-B9-2aV" id="hJe-FM-G9c"/>
+                        <outlet property="dormNameLabel" destination="7BJ-si-c6X" id="Uoh-u9-3je"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bqJ-db-tJN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

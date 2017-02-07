@@ -13,7 +13,11 @@ class GenericDormViewController: UITableViewController {
     let kTableHeaderHeight: CGFloat = 300.0;
     
     var previousScrollOffset: CGFloat = 0;
-    var headerView: UIView!
+    var headerView: UIView!;
+    var hideStatusBar: Bool = false;
+    
+    @IBOutlet weak var dormImageView: UIImageView!;
+    @IBOutlet weak var dormNameLabel: UILabel!;
     override func viewDidLoad() {
         super.viewDidLoad();
         self.tableView.delegate = self;
@@ -40,7 +44,7 @@ class GenericDormViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5;
+        return 40;
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -51,7 +55,6 @@ class GenericDormViewController: UITableViewController {
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         updateHeaderView()
     }
-
     
     func updateHeaderView() {
         var headerRect = CGRect(x: 0, y: -kTableHeaderHeight, width: tableView.bounds.width, height: kTableHeaderHeight)
@@ -65,3 +68,5 @@ class GenericDormViewController: UITableViewController {
     }
 
 }
+
+
