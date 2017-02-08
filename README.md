@@ -16,6 +16,7 @@ $ pod setup
 $ Ctrl+C
 $ cd ~/.cocoapods/repos
 $ git clone --depth 1 https://github.com/CocoaPods/Specs.git master
+$ cd /to/cloned/directory/IlliniLaundry
 $ cp -r ~/.cocoapods/repos/master ./master
 $ pod install --no-repo-update
 ```
