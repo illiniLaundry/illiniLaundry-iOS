@@ -14,6 +14,7 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
     var dateFormatter = DateFormatter();
     
     let kTableHeaderHeight: CGFloat = 300.0;
+    let attributes = [NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: UIFont(name: "Helvetica", size: 15)];
     
     var previousScrollOffset: CGFloat = 0;
     var headerView: UIView!;
@@ -32,7 +33,11 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
         self.dateFormatter.timeStyle = .long
         
         self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        self.refreshControl?.tintColor = UIColor.white;
         self.refreshControl?.addTarget(self, action: #selector(self.refresh), for: UIControlEvents.valueChanged)
+        self.tableView.insertSubview(refreshControl!, at: 0)
+        
+        
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
         swipeRight.direction = UISwipeGestureRecognizerDirection.right
         self.view.addGestureRecognizer(swipeRight)
@@ -46,6 +51,7 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
         tableView.tableHeaderView = nil;
         
         tableView.addSubview(headerView);
+        tableView.sendSubview(toBack: headerView);
         
         tableView.contentInset = UIEdgeInsetsMake(kTableHeaderHeight, 0, 0, 0);
         tableView.contentOffset = CGPoint(x: 0, y: -kTableHeaderHeight);
@@ -150,17 +156,22 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
         
         do {
             dorms = try container.viewContext.fetch(request);
-            tableView.reloadData();
-            print("table reloaded");
+            
             let now = NSDate()
             let updateString = "Last Updated at " + self.dateFormatter.string(
                 from: now as Date)
-            self.refreshControl?.attributedTitle = NSAttributedString(string: updateString)
-            self.refreshControl?.endRefreshing();
+            self.refreshControl?.attributedTitle = NSAttributedString(string: updateString, attributes: attributes)
+            self.tableView.reloadData();
+            print("table reloaded");
+            
         } catch {
+            let updateString = "Fetch failed"
+            self.refreshControl?.attributedTitle = NSAttributedString(string: updateString, attributes: attributes)
             print("Fetch failed");
         }
+        self.refreshControl?.endRefreshing();
     }
+    
     
     
 
