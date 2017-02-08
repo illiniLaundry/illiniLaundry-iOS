@@ -17,7 +17,7 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
     var previousScrollOffset: CGFloat = 0;
     var headerView: UIView!;
     var hideStatusBar: Bool = false;
-    var container: NSPersistentContainer!;
+
     var dorms = [DormStatus]();
     
     @IBOutlet weak var dormImageView: UIImageView!;
@@ -26,13 +26,7 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
         super.viewDidLoad();
         self.tableView.delegate = self;
         self.tableView.dataSource = self;
-        container = NSPersistentContainer(name: "Dorm");
-        container.loadPersistentStores { (storeDescription, error) in
-            self.container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy;
-            if let error = error {
-                print("Unresolved error \(error)");
-            }
-        }
+        
         
         headerView = tableView.tableHeaderView;
         tableView.tableHeaderView = nil;
@@ -42,79 +36,24 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
         tableView.contentInset = UIEdgeInsetsMake(kTableHeaderHeight, 0, 0, 0);
         tableView.contentOffset = CGPoint(x: 0, y: -kTableHeaderHeight);
         updateHeaderView();
-        performSelector(inBackground: #selector(fetchLaundryStatus), with: nil)
         
-//        clear();
         loadSavedData();
         
-        
-    }
-    
-    func fetchLaundryStatus() {
-        if let data = try? Data(contentsOf: URL(string: "http://23.23.147.128/homes/mydata/urba7723")!) {
-            let jsonUIUC = JSON(data: data)
-            let dormJSONArray = jsonUIUC["location"]["rooms"].arrayValue;
-            
-            
-            DispatchQueue.main.async { [unowned self] in
-                for dormJSON in dormJSONArray{
-                    let dormStatus = DormStatus(context: self.container.viewContext);
-                  
-                    self.configure(dormStatus: dormStatus, usingJSON: dormJSON);
-                    print("pulled dormJSON");
-                }
-                print("debug statement in fetch laundry status");
-                self.saveContext();
-                self.loadSavedData();
+        DispatchQueue.global(qos: .background).async { [weak self]
+            () -> Void in
+            CoreDataHelpers.fetchLaundryStatus();
+            DispatchQueue.main.async {
+                () -> Void in
+                self?.loadSavedData();
             }
         }
-    }
-    func configure(dormStatus: DormStatus,
-                   usingJSON dormJson: JSON){
-//        dormStatus.id = dormJson["id"].int16Value;
-        dormStatus.name = dormJson["name"].stringValue;
-//        dormStatus.networked = dormJson["networked"].stringValue;
-//        dormStatus.dormMachines = configure(usingJSON: dormJson["machines"]);
-        print(dormStatus);
-        print("configured dorm status");
-    }
-    
-    func configure(usingJSON dormMachinesJson: JSON) -> NSMutableOrderedSet{
-        let dormMachinesMutableSet = NSMutableOrderedSet();
-        
-        let max = dormMachinesJson.arrayValue.count;
-        
-        
-        let managedContext = container.viewContext;
 
-        for _ in 1...max {
-            let dormMachines = NSEntityDescription.insertNewObject(forEntityName: "DormMachines", into: managedContext) as? DormMachines;
-            dormMachines?.port = dormMachinesJson["port"].int16Value;
-            dormMachines?.label = dormMachinesJson["label"].int16Value;
-            dormMachines?.description_ = dormMachinesJson["description"].stringValue;
-            dormMachines?.status = dormMachinesJson["status"].stringValue;
-            
-            let formatter = ISO8601DateFormatter();
-            dormMachines?.startTime = formatter.date(from: dormMachinesJson["startTime"].stringValue) ?? Date();
-            
-            dormMachines?.timeRemaining = dormMachinesJson["timeRemaining"].int16Value;
-            dormMachinesMutableSet.add(dormMachines!);
-            print("add dormMachine");
-        }
-        print("configured dorm status");
-        return dormMachinesMutableSet;
+        
+        //on completion loadSavedData();
+        
         
     }
     
-    func saveContext() {
-        if container.viewContext.hasChanges {
-            do {
-                try container.viewContext.save()
-            } catch {
-                print("An error occurred while saving: \(error)");
-            }
-        }
-    }
     
     
     
@@ -142,16 +81,6 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
         updateHeaderView()
     }
     
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        switch type {
-        case .delete:
-            tableView.deleteRows(at: [indexPath!], with: .automatic)
-            
-        default:
-            break
-        }
-    }
-    
     func updateHeaderView() {
         var headerRect = CGRect(x: 0, y: -kTableHeaderHeight, width: tableView.bounds.width, height: kTableHeaderHeight)
         if tableView.contentOffset.y < -kTableHeaderHeight {
@@ -164,7 +93,8 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
     }
     
     func loadSavedData() {
-        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let container = appDelegate.container!;
         let request = DormStatus.createFetchRequest();
         let sort = NSSortDescriptor(key: "name", ascending: true);
         request.sortDescriptors = [sort];
@@ -178,24 +108,7 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
         }
     }
     
-    func clear() {
-        let context = container.viewContext
-        
-        for i in 0...container.managedObjectModel.entities.count-1 {
-            let entity = container.managedObjectModel.entities[i]
-            
-            do {
-                let query = NSFetchRequest<NSFetchRequestResult>(entityName: entity.name!)
-                let deleterequest = NSBatchDeleteRequest(fetchRequest: query)
-                try context.execute(deleterequest)
-                try context.save()
-                
-            } catch let error as NSError {
-                print("Error: \(error.localizedDescription)")
-                abort()
-            }
-        }
-    }
+    
 
 }
 
