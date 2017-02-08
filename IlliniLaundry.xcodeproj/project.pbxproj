@@ -19,6 +19,7 @@
 		390A8E451E48363400018855 /* MyDormsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 390A8E441E48363400018855 /* MyDormsViewController.swift */; };
 		390A8E471E48373600018855 /* Dorms.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 390A8E461E48373600018855 /* Dorms.storyboard */; };
 		390A8E4A1E484AEE00018855 /* ColorHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 390A8E491E484AEE00018855 /* ColorHelpers.swift */; };
+		392321F11E4B7E3F003731AA /* GenericDormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392E5EB61E486443006E6C7F /* GenericDormViewController.swift */; };
 		392E5EB41E4863D0006E6C7F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392E5EB31E4863D0006E6C7F /* Constants.swift */; };
 		392E5EB71E486443006E6C7F /* GenericDormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392E5EB61E486443006E6C7F /* GenericDormViewController.swift */; };
 		39C073421E48CDE400075ADE /* GenericDorm.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 39C073411E48CDE400075ADE /* GenericDorm.storyboard */; };
@@ -554,6 +555,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				392321F11E4B7E3F003731AA /* GenericDormViewController.swift in Sources */,
 				390A8E281E48345700018855 /* IlliniLaundryTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
