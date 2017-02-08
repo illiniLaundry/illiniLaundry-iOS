@@ -28,6 +28,15 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
         self.tableView.dataSource = self;
         
         
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
+        swipeRight.direction = UISwipeGestureRecognizerDirection.right
+        self.view.addGestureRecognizer(swipeRight)
+        
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
+        swipeLeft.direction = UISwipeGestureRecognizerDirection.left
+        self.view.addGestureRecognizer(swipeLeft)
+        
+        
         headerView = tableView.tableHeaderView;
         tableView.tableHeaderView = nil;
         
@@ -61,6 +70,8 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
         super.viewWillAppear(animated);
     }
     
+    
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dorms.count;
     }
@@ -73,9 +84,40 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
         return cell;
     }
     
+    
+    
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         updateHeaderView()
     }
+    
+    func respondToSwipeGesture(gesture: UIGestureRecognizer) {
+        if let swipeGesture = gesture as? UISwipeGestureRecognizer {
+            switch swipeGesture.direction {
+            case UISwipeGestureRecognizerDirection.right:
+                print("Swiped right")
+                let transition: CATransition = CATransition()
+                transition.duration = 0.2
+                transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+                transition.type = kCATransitionReveal
+                transition.subtype = kCATransitionFromLeft
+                self.view.window!.layer.add(transition, forKey: nil)
+                self.dismiss(animated: false, completion: nil)
+                
+            case UISwipeGestureRecognizerDirection.left:
+                print("Swiped left")
+                let transition: CATransition = CATransition()
+                transition.duration = 0.2
+                transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+                transition.type = kCATransitionReveal
+                transition.subtype = kCATransitionFromRight
+                self.view.window!.layer.add(transition, forKey: nil)
+                self.dismiss(animated: false, completion: nil)
+            default:
+                break
+            }
+        }
+    }
+    
     
     func updateHeaderView() {
         var headerRect = CGRect(x: 0, y: -kTableHeaderHeight, width: tableView.bounds.width, height: kTableHeaderHeight)
