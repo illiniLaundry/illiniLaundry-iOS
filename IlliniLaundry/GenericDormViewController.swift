@@ -47,10 +47,6 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
                 self?.loadSavedData();
             }
         }
-
-        
-        //on completion loadSavedData();
-        
         
     }
     
@@ -95,6 +91,7 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
     func loadSavedData() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let container = appDelegate.container!;
+        
         let request = DormStatus.createFetchRequest();
         let sort = NSSortDescriptor(key: "name", ascending: true);
         request.sortDescriptors = [sort];

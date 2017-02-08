@@ -10,6 +10,8 @@ import UIKit
 import XLPagerTabStrip
 
 class LaundryMachineViewController: ButtonBarPagerTabStripViewController {
+    
+    
     let selectedBarColor = hexToUIColor(IllinoisOrange)
     
     override func viewDidLoad() {

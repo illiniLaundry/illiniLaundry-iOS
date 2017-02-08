@@ -15,7 +15,6 @@ class CoreDataHelpers {
     class func fetchLaundryStatus() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let container = appDelegate.container!;
-        var completed = false;
         if let data = try? Data(contentsOf: URL(string: "http://23.23.147.128/homes/mydata/urba7723")!) {
             let jsonUIUC = JSON(data: data)
             let dormJSONArray = jsonUIUC["location"]["rooms"].arrayValue;
@@ -27,7 +26,6 @@ class CoreDataHelpers {
                     self.configure(dormStatus: dormStatus, usingJSON: dormJSON);
                     print("pulled dormJSON");
                 }
-                completed = true;
                 print("debug statement in fetch laundry status");
                 self.saveContext();
             }
@@ -35,34 +33,55 @@ class CoreDataHelpers {
     }
     class func configure(dormStatus: DormStatus,
                    usingJSON dormJson: JSON){
-        //        dormStatus.id = dormJson["id"].int16Value;
-        dormStatus.name = dormJson["name"].stringValue;
-        //        dormStatus.networked = dormJson["networked"].stringValue;
-        //        dormStatus.dormMachines = configure(usingJSON: dormJson["machines"]);
+        if let id = dormJson["id"].int16 {
+            dormStatus.id = id;
+        };
+        
+        if let name = dormJson["name"].string {
+            dormStatus.name = name;
+        };
+        
+        if let networked = dormJson["networked"].string {
+            dormStatus.networked = networked;
+        };
+        
+        if let dormMachines = configure(usingJSON: dormJson["machines"]) {
+            dormStatus.dormMachines = dormMachines;
+        };
         print(dormStatus);
         print("configured dorm status");
     }
-    class func configure(usingJSON dormMachinesJson: JSON) -> NSMutableOrderedSet{
+    class func configure(usingJSON dormMachinesJson: JSON) -> NSMutableOrderedSet?{
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let container = appDelegate.container!;
         let dormMachinesMutableSet = NSMutableOrderedSet();
         
-        let max = dormMachinesJson.arrayValue.count;
         
         
         let managedContext = container.viewContext;
         
-        for _ in 1...max {
+        for _ in dormMachinesMutableSet{
             let dormMachines = NSEntityDescription.insertNewObject(forEntityName: "DormMachines", into: managedContext) as? DormMachines;
-            dormMachines?.port = dormMachinesJson["port"].int16Value;
-            dormMachines?.label = dormMachinesJson["label"].int16Value;
-            dormMachines?.description_ = dormMachinesJson["description"].stringValue;
-            dormMachines?.status = dormMachinesJson["status"].stringValue;
+            
+            if let port = dormMachinesJson["port"].int16 {
+                dormMachines?.port = port;
+            };
+            if let label = dormMachinesJson["label"].int16 {
+                dormMachines?.label = label;
+            };
+            
+            if let description = dormMachinesJson["description"].string {
+                dormMachines?.description_ = description;
+            };
+            
+            if let status = dormMachinesJson["status"].int16 {
+                dormMachines?.status = status;
+            }
             
             let formatter = ISO8601DateFormatter();
             dormMachines?.startTime = formatter.date(from: dormMachinesJson["startTime"].stringValue) ?? Date();
             
-            dormMachines?.timeRemaining = dormMachinesJson["timeRemaining"].int16Value;
+            dormMachines?.timeRemaining = dormMachinesJson["timeRemaining"].stringValue;
             dormMachinesMutableSet.add(dormMachines!);
             print("add dormMachine");
         }

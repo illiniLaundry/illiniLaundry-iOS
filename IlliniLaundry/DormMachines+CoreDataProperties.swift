@@ -19,8 +19,8 @@ extension DormMachines {
     @NSManaged public var port: Int16
     @NSManaged public var label: Int16
     @NSManaged public var description_: String
-    @NSManaged public var status: String
+    @NSManaged public var status: Int16
     @NSManaged public var startTime: Date
-    @NSManaged public var timeRemaining: Int16
+    @NSManaged public var timeRemaining: String
 
 }
