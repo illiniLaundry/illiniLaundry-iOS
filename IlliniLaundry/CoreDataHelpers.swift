@@ -69,7 +69,7 @@ class CoreDataHelpers {
                 dormMachines.description_ = description;
             };
             
-            if let status = dormMachinesJson[i]["status"].int16 {
+            if let status = dormMachinesJson[i]["status"].string {
                 dormMachines.status = status;
             }
             

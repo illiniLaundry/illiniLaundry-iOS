@@ -7,12 +7,13 @@
         <attribute name="startTime" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="timeRemaining" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="dormStatus" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DormStatus" inverseName="dormMachines" inverseEntity="DormStatus" syncable="YES"/>
     </entity>
     <entity name="DormStatus" representedClassName="DormStatus" syncable="YES">
         <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="networked" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="dormMachines" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="DormMachines" syncable="YES"/>
+        <relationship name="dormMachines" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="DormMachines" inverseName="dormStatus" inverseEntity="DormMachines" syncable="YES"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="name"/>
@@ -20,7 +21,7 @@
         </uniquenessConstraints>
     </entity>
     <elements>
-        <element name="DormMachines" positionX="-54" positionY="18" width="128" height="135"/>
+        <element name="DormMachines" positionX="-54" positionY="18" width="128" height="150"/>
         <element name="DormStatus" positionX="-36" positionY="54" width="128" height="105"/>
     </elements>
 </model>
