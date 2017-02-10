@@ -45,47 +45,42 @@ class CoreDataHelpers {
             dormStatus.networked = networked;
         };
         
-        if let dormMachines = configure(usingJSON: dormJson["machines"]) {
-            dormStatus.dormMachines = dormMachines;
-        };
-        print(dormStatus);
-        print("configured dorm status");
+        if let dormMachine = configure(usingJSON: dormJson["machines"]) {
+            dormStatus.addToDormMachines(dormMachine);
+        }
     }
     class func configure(usingJSON dormMachinesJson: JSON) -> NSMutableOrderedSet?{
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let container = appDelegate.container!;
+        let max = dormMachinesJson.count;
         let dormMachinesMutableSet = NSMutableOrderedSet();
+        let machinesArray = Array(dormMachinesJson);
         
-        
-        
-        let managedContext = container.viewContext;
-        
-        for _ in dormMachinesMutableSet{
-            let dormMachines = NSEntityDescription.insertNewObject(forEntityName: "DormMachines", into: managedContext) as? DormMachines;
-            
-            if let port = dormMachinesJson["port"].int16 {
-                dormMachines?.port = port;
+        for i in 1...max {
+            let dormMachines = DormMachines(context: container.viewContext);
+            if let port = dormMachinesJson[i]["port"].int16 {
+                dormMachines.port = port;
             };
-            if let label = dormMachinesJson["label"].int16 {
-                dormMachines?.label = label;
+            if let label = dormMachinesJson[i]["label"].int16 {
+                dormMachines.label = label;
             };
             
-            if let description = dormMachinesJson["description"].string {
-                dormMachines?.description_ = description;
+            if let description = dormMachinesJson[i]["description"].string {
+                dormMachines.description_ = description;
             };
             
-            if let status = dormMachinesJson["status"].int16 {
-                dormMachines?.status = status;
+            if let status = dormMachinesJson[i]["status"].int16 {
+                dormMachines.status = status;
             }
             
             let formatter = ISO8601DateFormatter();
-            dormMachines?.startTime = formatter.date(from: dormMachinesJson["startTime"].stringValue) ?? Date();
+            dormMachines.startTime = formatter.date(from: dormMachinesJson["startTime"].stringValue) ?? Date();
             
-            dormMachines?.timeRemaining = dormMachinesJson["timeRemaining"].stringValue;
-            dormMachinesMutableSet.add(dormMachines!);
+            dormMachines.timeRemaining = dormMachinesJson[i]["timeRemaining"].stringValue;
+            dormMachinesMutableSet.add(dormMachines);
             print("add dormMachine");
         }
-        print("configured dorm status");
+        print("configured dorm machines status");
         return dormMachinesMutableSet;
         
     }

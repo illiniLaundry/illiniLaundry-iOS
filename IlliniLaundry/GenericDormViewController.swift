@@ -65,6 +65,13 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
             DispatchQueue.main.async {
                 () -> Void in
                 self?.loadSavedData();
+                print ("THIS IS WHERE WE PRINt");
+                print (self?.dorms[0].dormMachines.value(forKey:"timeRemaining"))
+                let dorm = self!.dorms[1];
+                let dormMachinesArray = Array(dorm.dormMachines);
+                for dormMachine in dormMachinesArray {
+//                    print ((dormMachine as! DormMachines))
+                }
             }
         }
         
@@ -84,14 +91,21 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
     
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dorms.count;
+        if(dorms.count > 1) {
+            return dorms[3].dormMachines.count
+        }
+        return 1;
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LaundryMachineCell", for: indexPath) as! LaundryMachineCell;
+        if(dorms.count > 1) {
+            let dorm = dorms[3];
+            print (dorm.name);
+            cell.DormNameLabel.text = (dorm.dormMachines[indexPath.row] as! DormMachines).timeRemaining;
+        }
         
-        let dorm = dorms[indexPath.row];
-        cell.DormNameLabel.text = dorm.name;
+
         return cell;
     }
     

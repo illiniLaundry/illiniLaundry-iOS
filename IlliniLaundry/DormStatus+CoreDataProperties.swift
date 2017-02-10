@@ -20,7 +20,6 @@ extension DormStatus {
     @NSManaged public var name: String
     @NSManaged public var networked: String
     @NSManaged public var dormMachines: NSMutableOrderedSet
-
 }
 
 // MARK: Generated accessors for dormMachines
