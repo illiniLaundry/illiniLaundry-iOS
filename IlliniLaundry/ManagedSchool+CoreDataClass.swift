@@ -1,5 +1,5 @@
 //
-//  DormStatus+CoreDataClass.swift
+//  ManagedSchool+CoreDataClass.swift
 //  IlliniLaundry
 //
 //  Created by Minhyuk Park on 11/02/2017.
@@ -10,6 +10,6 @@ import Foundation
 import CoreData
 
 
-public class DormStatus: NSManagedObject {
+public class ManagedSchool: NSManagedObject {
 
 }

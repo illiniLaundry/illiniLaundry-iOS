@@ -2,7 +2,7 @@
 //  DormStatus+CoreDataProperties.swift
 //  IlliniLaundry
 //
-//  Created by Minhyuk Park on 10/02/2017.
+//  Created by Minhyuk Park on 11/02/2017.
 //  Copyright © 2017 Minhyuk Park. All rights reserved.
 //
 
@@ -12,48 +12,48 @@ import CoreData
 
 extension DormStatus {
 
-    @nonobjc public class func createFetchRequest() -> NSFetchRequest<DormStatus> {
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<DormStatus> {
         return NSFetchRequest<DormStatus>(entityName: "DormStatus");
     }
 
     @NSManaged public var id: Int16
-    @NSManaged public var name: String
-    @NSManaged public var networked: String
-    @NSManaged public var dormMachines: NSMutableOrderedSet
+    @NSManaged public var name: String?
+    @NSManaged public var networked: String?
+    @NSManaged public var machines: NSOrderedSet?
 
 }
 
-// MARK: Generated accessors for dormMachines
+// MARK: Generated accessors for machines
 extension DormStatus {
 
-    @objc(insertObject:inDormMachinesAtIndex:)
-    @NSManaged public func insertIntoDormMachines(_ value: DormMachines, at idx: Int)
+    @objc(insertObject:inMachinesAtIndex:)
+    @NSManaged public func insertIntoMachines(_ value: DormMachines, at idx: Int)
 
-    @objc(removeObjectFromDormMachinesAtIndex:)
-    @NSManaged public func removeFromDormMachines(at idx: Int)
+    @objc(removeObjectFromMachinesAtIndex:)
+    @NSManaged public func removeFromMachines(at idx: Int)
 
-    @objc(insertDormMachines:atIndexes:)
-    @NSManaged public func insertIntoDormMachines(_ values: [DormMachines], at indexes: NSIndexSet)
+    @objc(insertMachines:atIndexes:)
+    @NSManaged public func insertIntoMachines(_ values: [DormMachines], at indexes: NSIndexSet)
 
-    @objc(removeDormMachinesAtIndexes:)
-    @NSManaged public func removeFromDormMachines(at indexes: NSIndexSet)
+    @objc(removeMachinesAtIndexes:)
+    @NSManaged public func removeFromMachines(at indexes: NSIndexSet)
 
-    @objc(replaceObjectInDormMachinesAtIndex:withObject:)
-    @NSManaged public func replaceDormMachines(at idx: Int, with value: DormMachines)
+    @objc(replaceObjectInMachinesAtIndex:withObject:)
+    @NSManaged public func replaceMachines(at idx: Int, with value: DormMachines)
 
-    @objc(replaceDormMachinesAtIndexes:withDormMachines:)
-    @NSManaged public func replaceDormMachines(at indexes: NSIndexSet, with values: [DormMachines])
+    @objc(replaceMachinesAtIndexes:withMachines:)
+    @NSManaged public func replaceMachines(at indexes: NSIndexSet, with values: [DormMachines])
 
-    @objc(addDormMachinesObject:)
-    @NSManaged public func addToDormMachines(_ value: DormMachines)
+    @objc(addMachinesObject:)
+    @NSManaged public func addToMachines(_ value: DormMachines)
 
-    @objc(removeDormMachinesObject:)
-    @NSManaged public func removeFromDormMachines(_ value: DormMachines)
+    @objc(removeMachinesObject:)
+    @NSManaged public func removeFromMachines(_ value: DormMachines)
 
-    @objc(addDormMachines:)
-    @NSManaged public func addToDormMachines(_ values: NSOrderedSet)
+    @objc(addMachines:)
+    @NSManaged public func addToMachines(_ values: NSOrderedSet)
 
-    @objc(removeDormMachines:)
-    @NSManaged public func removeFromDormMachines(_ values: NSOrderedSet)
+    @objc(removeMachines:)
+    @NSManaged public func removeFromMachines(_ values: NSOrderedSet)
 
 }

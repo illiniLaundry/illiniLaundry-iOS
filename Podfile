@@ -8,6 +8,10 @@ target 'IlliniLaundry' do
   'https://github.com/KelvinJin/XLPagerTabStrip', :branch => 'swift3'
   pod 'SwiftyJSON', :git=>
   'https://github.com/SwiftyJSON/SwiftyJSON.git'
+  pod 'DATAStack', '~> 6'
+  pod 'Sync', '~> 2'
+  pod 'SYNCPropertyMapper', '~>5'
+  pod 'Alamofire', '~> 4.3'
 
   # Pods for IlliniLaundry
 
