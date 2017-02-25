@@ -9,29 +9,34 @@
 import UIKit
 import CoreData
 import SwiftyJSON
+import Alamofire
 
-class GenericDormViewController: UITableViewController, NSFetchedResultsControllerDelegate {
-    var dateFormatter = DateFormatter();
+class GenericDormViewController: UITableViewController, NSFetchedResultsControllerDelegate{
+    var dateFormatter = DateFormatter()
+    lazy var dormName = ""
     
-    let kTableHeaderHeight: CGFloat = 300.0;
-    let attributes = [NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: UIFont(name: "Helvetica", size: 15)];
+    let kTableHeaderHeight: CGFloat = 300.0
+    let attributes = [NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: UIFont(name: "Helvetica", size: 15)]
     
-    var previousScrollOffset: CGFloat = 0;
-    var headerView: UIView!;
-    var hideStatusBar: Bool = false;
+    var previousScrollOffset: CGFloat = 0
+    var headerView: UIView!
+    var hideStatusBar: Bool = false
+    
+    @IBOutlet weak var dormImageView: UIImageView!
+    @IBOutlet weak var dormNameLabel: UILabel!
+    
 
-    var dorms = [DormStatus]();
     
-    @IBOutlet weak var dormImageView: UIImageView!;
-    @IBOutlet weak var dormNameLabel: UILabel!;
     override func viewDidLoad() {
-        super.viewDidLoad();
-        self.tableView.delegate = self;
-        self.tableView.dataSource = self;
+        super.viewDidLoad()
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: String(describing: UITableViewCell.self))
         
         self.dateFormatter.dateStyle = .short
         self.dateFormatter.timeStyle = .long
         
+        self.refreshControl = UIRefreshControl()
         self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh")
         self.refreshControl?.tintColor = UIColor.white;
         self.refreshControl?.addTarget(self, action: #selector(self.refresh), for: UIControlEvents.valueChanged)
@@ -46,7 +51,7 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
         swipeLeft.direction = UISwipeGestureRecognizerDirection.left
         self.view.addGestureRecognizer(swipeLeft)
         
-        
+
         headerView = tableView.tableHeaderView;
         tableView.tableHeaderView = nil;
         
@@ -56,25 +61,12 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
         tableView.contentInset = UIEdgeInsetsMake(kTableHeaderHeight, 0, 0, 0);
         tableView.contentOffset = CGPoint(x: 0, y: -kTableHeaderHeight);
         updateHeaderView();
-        
-        loadSavedData();
-        
-        DispatchQueue.global(qos: .background).async { [weak self]
-            () -> Void in
-            CoreDataHelpers.fetchLaundryStatus();
-            DispatchQueue.main.async {
-                () -> Void in
-                self?.loadSavedData();
-                print ("THIS IS WHERE WE PRINt");
-                print (self?.dorms[0].dormMachines.value(forKey:"timeRemaining"))
-                let dorm = self!.dorms[1];
-                let dormMachinesArray = Array(dorm.dormMachines);
-                for dormMachine in dormMachinesArray {
-//                    print ((dormMachine as! DormMachines))
-                }
-            }
-        }
-        
+        dormName = "Nugent Rm 126"
+        self.fetch()
+    }
+    
+    func refresh() {
+        APIManager.shared.getAllStatus(success: APIManager.shared.getAllStatusSuccess, failure: APIManager.shared.getAllStatusError)
     }
     
     
@@ -86,27 +78,6 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated);
-    }
-    
-    
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if(dorms.count > 1) {
-            return dorms[3].dormMachines.count
-        }
-        return 1;
-    }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "LaundryMachineCell", for: indexPath) as! LaundryMachineCell;
-        if(dorms.count > 1) {
-            let dorm = dorms[3];
-            print (dorm.name);
-            cell.DormNameLabel.text = (dorm.dormMachines[indexPath.row] as! DormMachines).timeRemaining;
-        }
-        
-
-        return cell;
     }
     
     
@@ -156,39 +127,114 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
 
     }
     
-    func refresh(sender: AnyObject) {
-        self.loadSavedData();
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        print(fetchedResultsController.sections?.count)
+        return fetchedResultsController.sections?.count ?? 0
     }
     
-    func loadSavedData() {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let container = appDelegate.container!;
-        
-        let request = DormStatus.createFetchRequest();
-        let sort = NSSortDescriptor(key: "name", ascending: true);
-        request.sortDescriptors = [sort];
-        
-        do {
-            dorms = try container.viewContext.fetch(request);
-            
-            let now = NSDate()
-            let updateString = "Last Updated at " + self.dateFormatter.string(
-                from: now as Date)
-            self.refreshControl?.attributedTitle = NSAttributedString(string: updateString, attributes: attributes)
-            self.tableView.reloadData();
-            print("table reloaded");
-            
-        } catch {
-            let updateString = "Fetch failed"
-            self.refreshControl?.attributedTitle = NSAttributedString(string: updateString, attributes: attributes)
-            print("Fetch failed");
-        }
-        self.refreshControl?.endRefreshing();
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print(fetchedResultsController.sections?[section].numberOfObjects)
+        return fetchedResultsController.sections?[section].numberOfObjects ?? 0
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+//        performSegue(withIdentifier: "showEventDetails", sender: indexPath)
+    }
+    
+    lazy var fetchedResultsController: NSFetchedResultsController<DormMachines> = {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        let fetchRequest = NSFetchRequest<DormMachines>(entityName: "DormMachines")
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "port", ascending: true)]
+        fetchRequest.includesSubentities = false
+        
+        fetchRequest.predicate = NSPredicate(format: "dormStatus == %@", self.dormName)
+        
+        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: appDelegate.managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
+        frc.delegate = self
+        return frc
+    }()
+    
+    func fetch() {
+        print("called fetch")
+        do {
+            try fetchedResultsController.performFetch()
+        } catch let error as NSError {
+            assertionFailure("Failed to preform fetch operation, error: \(error)")
+        }
+        tableView.reloadData()
+    }
+    
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.beginUpdates()
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let offsetIndexPath = IndexPath(row: indexPath.row - 1, section: indexPath.section);
+        let machine = fetchedResultsController.object(at: offsetIndexPath)
+
+        let cell = tableView.dequeueReusableCell(withIdentifier: "LaundryMachineCell", for: indexPath)
+        
+        if let cell = cell as? LaundryMachineCell {
+            print(machine.timeRemaining)
+            cell.timeRemainingLabel.text = machine.timeRemaining
+        }
+        
+        return cell
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        
+        switch type {
+        case .insert:
+            guard let insertIndexPath = newIndexPath else { return }
+            tableView.insertRows(at: [insertIndexPath], with: .fade)
+        case .delete:
+            guard let deleteIndexPath = indexPath else { return }
+            tableView.deleteRows(at: [deleteIndexPath], with: .fade)
+        case .update:
+            guard let updateIndexPath = indexPath, let cell = tableView.cellForRow(at: updateIndexPath) else { return }
+            if(updateIndexPath.row <= 0) {
+                return
+            }
+            let offsetIndexPath = IndexPath(row: updateIndexPath.row - 1, section: updateIndexPath.section);
+            let dormMachine = fetchedResultsController.object(at: offsetIndexPath)
+            
+            if let cell = cell as? LaundryMachineCell {
+                cell.timeRemainingLabel.text = dormMachine.timeRemaining
+            }
+            
+            tableView.reloadRows(at: [updateIndexPath], with: .fade)
+        case .move:
+            guard let fromIndexPath = indexPath, let toIndexPath = newIndexPath else { return }
+            tableView.insertRows(at: [toIndexPath],   with: .fade)
+            tableView.deleteRows(at: [fromIndexPath], with: .fade)
+        }
+        
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
+        switch type {
+            case .insert:
+                tableView.insertSections([sectionIndex], with: .fade)
+            case .delete:
+                tableView.deleteSections([sectionIndex], with: .fade)
+            case .update:
+                tableView.reloadSections([sectionIndex], with: .fade)
+            case .move:
+                break
+        }
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.endUpdates()
+    }
+    
     
     
     
 
 }
-
 

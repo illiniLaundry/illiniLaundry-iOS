@@ -1,19 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11759" systemVersion="16D32" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="DormMachines" representedClassName="DormMachines" syncable="YES">
+    <entity name="DormMachines" representedClassName=".DormMachines" syncable="YES">
         <attribute name="description_" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="label" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="port" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="port" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES">
+            <userInfo>
+                <entry key="hyper.isPrimaryKey" value="true"/>
+            </userInfo>
+        </attribute>
         <attribute name="startTime" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="timeRemaining" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="dormStatus" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DormStatus" inverseName="dormMachines" inverseEntity="DormStatus" syncable="YES"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="port"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
     </entity>
-    <entity name="DormStatus" representedClassName="DormStatus" syncable="YES">
+    <entity name="DormStatus" representedClassName=".DormStatus" syncable="YES">
         <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES">
+            <userInfo>
+                <entry key="hyper.isPrimaryKey" value="true"/>
+            </userInfo>
+        </attribute>
         <attribute name="networked" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="dormMachines" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="DormMachines" inverseName="dormStatus" inverseEntity="DormMachines" syncable="YES"/>
+        <relationship name="dormMachines" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DormMachines" inverseName="dormStatus" inverseEntity="DormMachines" syncable="YES"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="name"/>
@@ -21,7 +34,7 @@
         </uniquenessConstraints>
     </entity>
     <elements>
-        <element name="DormMachines" positionX="-54" positionY="18" width="128" height="150"/>
-        <element name="DormStatus" positionX="-36" positionY="54" width="128" height="105"/>
+        <element name="DormMachines" positionX="268" positionY="243" width="128" height="148"/>
+        <element name="DormStatus" positionX="52" positionY="261" width="128" height="103"/>
     </elements>
 </model>

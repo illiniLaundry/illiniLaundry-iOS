@@ -5,115 +5,77 @@
 //  Created by Minhyuk Park on 07/02/2017.
 //  Copyright © 2017 Minhyuk Park. All rights reserved.
 //
-
+import Foundation
 import CoreData
 import SwiftyJSON
 
 class CoreDataHelpers {
-
-    
-    class func fetchLaundryStatus() {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let container = appDelegate.container!;
-        if let data = try? Data(contentsOf: URL(string: "http://23.23.147.128/homes/mydata/urba7723")!) {
-            let jsonUIUC = JSON(data: data)
-            let dormJSONArray = jsonUIUC["location"]["rooms"].arrayValue;
-            
-            DispatchQueue.main.async {
-                for dormJSON in dormJSONArray{
-                    let dormStatus = DormStatus(context: container.viewContext);
-                    
-                    self.configure(dormStatus: dormStatus, usingJSON: dormJSON);
-                    print("pulled dormJSON");
+    class func updateAll(json : JSON, completion: ()->() ) {
+        let dateFormatter = DateFormatter();
+        dateFormatter.locale = Locale(identifier: "en_US")
+        dateFormatter.dateFormat = "yyyy-mm-dd hh:mm:ss"
+        
+        let dormStatuses = json["location"]["rooms"]
+        
+        for dormStatus in dormStatuses {
+            let id = dormStatus.1["id"].int16Value
+            let name = dormStatus.1["label"].stringValue
+            let networked = dormStatus.1["networked"].stringValue
+            let machines = dormStatus.1["machines"]
+            var tempMachines:[DormMachines] = []
+            print(machines)
+            if machines.arrayValue != [] {
+                for machine in machines {
+                    let port = machine.1["port"].int16Value
+                    let label = machine.1["label"].int16Value
+                    let description = machine.1["description"].stringValue
+                    let status = machine.1["status"].stringValue
+                    let startTime = dateFormatter.date(from: machine.1["startTime"].stringValue) ?? Date()
+                    let timeRemaining = machine.1["timeRemaining"].stringValue
+                    let dormMachine = self.createDormMachine(port: port, label: label, description: description, status: status, startTime: startTime, timeRemaining: timeRemaining)
+                    tempMachines.append(dormMachine)
                 }
-                print("debug statement in fetch laundry status");
-                self.saveContext();
             }
+            let dormStatus = self.createDormStatus(id: id, name: name, networked: networked, machines: tempMachines)
         }
-    }
-    class func configure(dormStatus: DormStatus,
-                   usingJSON dormJson: JSON){
-        if let id = dormJson["id"].int16 {
-            dormStatus.id = id;
-        };
-        
-        if let name = dormJson["name"].string {
-            dormStatus.name = name;
-        };
-        
-        if let networked = dormJson["networked"].string {
-            dormStatus.networked = networked;
-        };
-        
-        if let dormMachine = configure(usingJSON: dormJson["machines"]) {
-            dormStatus.addToDormMachines(dormMachine);
-        }
-    }
-    class func configure(usingJSON dormMachinesJson: JSON) -> NSMutableOrderedSet?{
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let container = appDelegate.container!;
-        let max = dormMachinesJson.count;
-        let dormMachinesMutableSet = NSMutableOrderedSet();
-        let machinesArray = Array(dormMachinesJson);
-        
-        for i in 1...max {
-            let dormMachines = DormMachines(context: container.viewContext);
-            if let port = dormMachinesJson[i]["port"].int16 {
-                dormMachines.port = port;
-            };
-            if let label = dormMachinesJson[i]["label"].int16 {
-                dormMachines.label = label;
-            };
-            
-            if let description = dormMachinesJson[i]["description"].string {
-                dormMachines.description_ = description;
-            };
-            
-            if let status = dormMachinesJson[i]["status"].string {
-                dormMachines.status = status;
-            }
-            
-            let formatter = ISO8601DateFormatter();
-            dormMachines.startTime = formatter.date(from: dormMachinesJson["startTime"].stringValue) ?? Date();
-            
-            dormMachines.timeRemaining = dormMachinesJson[i]["timeRemaining"].stringValue;
-            dormMachinesMutableSet.add(dormMachines);
-            print("add dormMachine");
-        }
-        print("configured dorm machines status");
-        return dormMachinesMutableSet;
-        
-    }
-    class func clear() {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let container = appDelegate.container!;
-        let context = container.viewContext
-        
-        for i in 0...container.managedObjectModel.entities.count-1 {
-            let entity = container.managedObjectModel.entities[i]
-            
-            do {
-                let query = NSFetchRequest<NSFetchRequestResult>(entityName: entity.name!)
-                let deleterequest = NSBatchDeleteRequest(fetchRequest: query)
-                try context.execute(deleterequest)
-                try context.save()
-                
-            } catch let error as NSError {
-                print("Error: \(error.localizedDescription)")
-                abort()
-            }
-        }
-    }
-    class func saveContext() {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let container = appDelegate.container!;
-        if container.viewContext.hasChanges {
-            do {
-                try container.viewContext.save()
-            } catch {
-                print("An error occurred while saving: \(error)");
-            }
-        }
+        completion()
     }
     
+    class func createDormMachine(port: Int16, label: Int16, description: String, status: String, startTime: Date, timeRemaining: String) -> DormMachines {
+        print("called create dorm machine")
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let fetchRequest = NSFetchRequest<DormMachines>(entityName: "DormMachines")
+        fetchRequest.predicate = NSPredicate(format: "port == %@", NSNumber(value: port))
+        
+        if let dormMachines = try? appDelegate.managedObjectContext.fetch(fetchRequest) {
+            if dormMachines.count > 0 {
+                dormMachines[0].update(startTime: startTime, timeRemaining: timeRemaining)
+                return dormMachines[0];
+            }
+        }
+        
+        let machine = NSEntityDescription.insertNewObject(forEntityName: "DormMachines", into: appDelegate.managedObjectContext) as! DormMachines
+        machine.initialize(port: port, label: label, description: description, status: status, startTime: startTime, timeRemaining: timeRemaining)
+        return machine
+        
+    }
+    
+    class func createDormStatus(id: Int16, name: String, networked: String, machines: [DormMachines]) -> DormStatus{
+        print("called create dorm status")
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let fetchRequest = NSFetchRequest<DormStatus>(entityName: "DormStatus")
+        fetchRequest.predicate = NSPredicate(format: "id == %@", NSNumber(value: id))
+        
+        if let dormStatuses = try? appDelegate.managedObjectContext.fetch(fetchRequest) {
+            if dormStatuses.count > 0 {
+                dormStatuses[0].update(machines: machines)
+                return dormStatuses[0];
+            }
+        }
+        
+        let status = NSEntityDescription.insertNewObject(forEntityName: "DormStatus", into: appDelegate.managedObjectContext) as! DormStatus
+        status.initialize(id: id, name: name, networked: networked, machines: machines)
+        return status
+        
+    }
 }

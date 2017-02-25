@@ -9,7 +9,7 @@
 import UIKit
 
 class LaundryMachineCell: UITableViewCell {
-    @IBOutlet weak var DormNameLabel: UILabel!
+    @IBOutlet weak var timeRemainingLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib();
     }
