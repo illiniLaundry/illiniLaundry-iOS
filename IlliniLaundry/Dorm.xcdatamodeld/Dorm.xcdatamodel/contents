@@ -11,6 +11,7 @@
         <attribute name="startTime" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="timeRemaining" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="dormStatus" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DormStatus" inverseName="dormMachines" inverseEntity="DormStatus" syncable="YES"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="port"/>
@@ -25,23 +26,15 @@
             </userInfo>
         </attribute>
         <attribute name="networked" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="machines" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="DormMachines" syncable="YES"/>
+        <relationship name="dormMachines" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DormMachines" inverseName="dormStatus" inverseEntity="DormMachines" syncable="YES"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="name"/>
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
-    <entity name="ManagedSchool" representedClassName=".ManagedSchool" syncable="YES">
-        <attribute name="code" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="company" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="networked" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
-        <relationship name="school" optional="YES" maxCount="1" deletionRule="Nullify" ordered="YES" destinationEntity="DormStatus" syncable="YES"/>
-    </entity>
     <elements>
-        <element name="DormMachines" positionX="268" positionY="243" width="128" height="135"/>
-        <element name="DormStatus" positionX="18" positionY="257" width="128" height="103"/>
-        <element name="ManagedSchool" positionX="-180" positionY="267" width="128" height="118"/>
+        <element name="DormMachines" positionX="268" positionY="243" width="128" height="148"/>
+        <element name="DormStatus" positionX="52" positionY="261" width="128" height="103"/>
     </elements>
 </model>
