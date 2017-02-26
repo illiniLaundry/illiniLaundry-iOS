@@ -17,13 +17,15 @@ public class DormMachines: NSManagedObject {
         self.timeRemaining = timeRemaining;
     }
     
-    func initialize(port: Int16, label: Int16, description: String, status: String, startTime: Date, timeRemaining: String) {
+    func initialize(port: Int16, label: Int16, description: String, status: String, startTime: Date, timeRemaining: String, uniqueID: String, dormName: String) {
         self.port = port
         self.label = label
         self.description_ = description
         self.status = status
         self.startTime = startTime
         self.timeRemaining = timeRemaining
+        self.uniqueID = uniqueID
+        self.dormName = dormName
         print("finished initializing dorm machine")
     }
     
