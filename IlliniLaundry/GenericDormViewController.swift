@@ -12,6 +12,8 @@ import SwiftyJSON
 import Alamofire
 
 class GenericDormViewController: UITableViewController, NSFetchedResultsControllerDelegate{
+    
+    var mTimer = Timer()
     var dateFormatter = DateFormatter()
     lazy var dormName = ""
     
@@ -22,6 +24,8 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
     var headerView: UIView!
     var hideStatusBar: Bool = false
     
+    
+    
     @IBOutlet weak var dormImageView: UIImageView!
     @IBOutlet weak var dormNameLabel: UILabel!
     
@@ -29,9 +33,6 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
-        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: String(describing: UITableViewCell.self))
         
         self.dateFormatter.dateStyle = .short
         self.dateFormatter.timeStyle = .long
@@ -61,12 +62,16 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
         tableView.contentInset = UIEdgeInsetsMake(kTableHeaderHeight, 0, 0, 0);
         tableView.contentOffset = CGPoint(x: 0, y: -kTableHeaderHeight);
         updateHeaderView();
-        dormName = "Nugent Rm 126"
-        self.fetch()
+        fetch()
     }
     
     func refresh() {
         APIManager.shared.getAllStatus(success: APIManager.shared.getAllStatusSuccess, failure: APIManager.shared.getAllStatusError)
+        self.fetch()
+    }
+    
+    func printData() {
+        print(fetchedResultsController.fetchedObjects?.description ?? "EMPTY")
     }
     
     
@@ -129,12 +134,10 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
     
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        print(fetchedResultsController.sections?.count)
         return fetchedResultsController.sections?.count ?? 0
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(fetchedResultsController.sections?[section].numberOfObjects)
         return fetchedResultsController.sections?[section].numberOfObjects ?? 0
     }
     
@@ -145,19 +148,22 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
     
     lazy var fetchedResultsController: NSFetchedResultsController<DormMachines> = {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.managedObjectContext
+        
         
         let fetchRequest = NSFetchRequest<DormMachines>(entityName: "DormMachines")
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "port", ascending: true)]
-        fetchRequest.includesSubentities = false
+//        fetchRequest.includesSubentities = false
         
-        fetchRequest.predicate = NSPredicate(format: "dormStatus == %@", self.dormName)
+        fetchRequest.predicate = NSPredicate(format: "dormName == %@", "ISR: Wardall")
         
-        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: appDelegate.managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
+        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
         frc.delegate = self
         return frc
     }()
     
     func fetch() {
+        printData()
         print("called fetch")
         do {
             try fetchedResultsController.performFetch()
@@ -172,13 +178,16 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if(indexPath.row < 1) {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "LaundryMachineCell", for: IndexPath(row: 1, section: 0))
+            return cell
+        }
         let offsetIndexPath = IndexPath(row: indexPath.row - 1, section: indexPath.section);
         let machine = fetchedResultsController.object(at: offsetIndexPath)
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "LaundryMachineCell", for: indexPath)
         
         if let cell = cell as? LaundryMachineCell {
-            print(machine.timeRemaining)
             cell.timeRemainingLabel.text = machine.timeRemaining
         }
         
@@ -186,7 +195,6 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        
         switch type {
         case .insert:
             guard let insertIndexPath = newIndexPath else { return }

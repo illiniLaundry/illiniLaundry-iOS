@@ -22,6 +22,8 @@ extension DormMachines {
     @NSManaged public var startTime: Date
     @NSManaged public var status: String
     @NSManaged public var timeRemaining: String
+    @NSManaged public var uniqueID: String
+    @NSManaged public var dormName: String
     @NSManaged public var dormStatus: DormStatus
 
 }

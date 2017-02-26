@@ -13,11 +13,16 @@ import SwiftyJSON
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    var mTimer = Timer()
     var window: UIWindow?
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+//        mTimer = Timer.scheduledTimer(timeInterval: 10, target:self, selector: #selector(updateAllDorms), userInfo: nil, repeats: true)
         return true
     }
-
+    
+    func updateAllDorms() {
+        APIManager.shared.getAllStatus(success: APIManager.shared.getAllStatusSuccess, failure: APIManager.shared.getAllStatusError)
+    }
 
 
 
@@ -46,6 +51,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     
+    // MARK: - Core Data stack
+    lazy var applicationDocumentsDirectory: NSURL = {
+        // The directory the application uses to store the Core Data store file. This code uses a directory named "me.hackillinois.hackillinois_2017_ios" in the application's documents Application Support directory.
+        let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return urls[urls.count-1] as NSURL
+    }()
+    
+    
     /* We need to keep this API for legacy iOS 9.0 support */
     lazy var managedObjectModel: NSManagedObjectModel = {
         // The managed object model for the application. This property is not optional. It is a fatal error for the application not to be able to find and load its model.
@@ -54,17 +67,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }()
     
     
-    lazy var applicationDocumentsDirectory: NSURL = {
-        let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        return urls[urls.count-1] as NSURL
-    }()
-    
-    
     lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
         // The persistent store coordinator for the application. This implementation creates and returns a coordinator, having added the store for the application to it. This property is optional since there are legitimate error conditions that could cause the creation of the store to fail.
         // Create the coordinator and store
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
-        let url = self.applicationDocumentsDirectory.appendingPathComponent("SingleViewCoreData.sqlite")
+        let url = self.applicationDocumentsDirectory.appendingPathComponent("Dorm.sqlite")
         var failureReason = "There was an error creating or loading the application's saved data."
         do {
             try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: nil)
@@ -108,6 +115,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
+
 
 
 }
