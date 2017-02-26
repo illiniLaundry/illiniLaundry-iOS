@@ -24,7 +24,6 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
     var headerView: UIView!
     var hideStatusBar: Bool = false
     
-
     
     
     @IBOutlet weak var dormImageView: UIImageView!
@@ -63,12 +62,12 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
         tableView.contentInset = UIEdgeInsetsMake(kTableHeaderHeight, 0, 0, 0);
         tableView.contentOffset = CGPoint(x: 0, y: -kTableHeaderHeight);
         updateHeaderView();
-        mTimer = Timer.scheduledTimer(timeInterval: 10, target:self, selector: #selector(printData), userInfo: nil, repeats: true)
+        fetch()
     }
     
     func refresh() {
         APIManager.shared.getAllStatus(success: APIManager.shared.getAllStatusSuccess, failure: APIManager.shared.getAllStatusError)
-        fetch()
+        self.fetch()
     }
     
     func printData() {
@@ -149,12 +148,14 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
     
     lazy var fetchedResultsController: NSFetchedResultsController<DormMachines> = {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let context = appDelegate.persistentContainer.viewContext
+        let context = appDelegate.managedObjectContext
+        
+        
         let fetchRequest = NSFetchRequest<DormMachines>(entityName: "DormMachines")
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "port", ascending: true)]
-        fetchRequest.includesSubentities = false
+//        fetchRequest.includesSubentities = false
         
-//        fetchRequest.predicate = NSPredicate(format: "dormName == %@", "LAR: Leonard")
+        fetchRequest.predicate = NSPredicate(format: "dormName == %@", "ISR: Wardall")
         
         let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
         frc.delegate = self
@@ -162,6 +163,7 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
     }()
     
     func fetch() {
+        printData()
         print("called fetch")
         do {
             try fetchedResultsController.performFetch()
@@ -172,7 +174,6 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
     }
     
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        print("will change content")
         tableView.beginUpdates()
     }
     
@@ -187,7 +188,6 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
         let cell = tableView.dequeueReusableCell(withIdentifier: "LaundryMachineCell", for: indexPath)
         
         if let cell = cell as? LaundryMachineCell {
-            print(machine.dormName)
             cell.timeRemainingLabel.text = machine.timeRemaining
         }
         
@@ -195,7 +195,6 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        print("did change an object")
         switch type {
         case .insert:
             guard let insertIndexPath = newIndexPath else { return }
@@ -225,7 +224,6 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
-        print("didchange sectionInfo")
         switch type {
             case .insert:
                 tableView.insertSections([sectionIndex], with: .fade)
@@ -239,7 +237,6 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
     }
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        print("did change content")
         tableView.endUpdates()
     }
     

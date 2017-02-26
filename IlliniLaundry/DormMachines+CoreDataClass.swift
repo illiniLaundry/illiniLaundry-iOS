@@ -26,7 +26,6 @@ public class DormMachines: NSManagedObject {
         self.timeRemaining = timeRemaining
         self.uniqueID = uniqueID
         self.dormName = dormName
-        print("finished initializing dorm machine")
     }
     
     

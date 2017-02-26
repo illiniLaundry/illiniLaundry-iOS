@@ -24,7 +24,6 @@ class CoreDataHelpers {
             let networked = dormStatus.1["networked"].stringValue
             let machines = dormStatus.1["machines"]
             var tempMachines:[DormMachines] = []
-            print(machines)
             if machines.arrayValue != [] {
                 for machine in machines {
                     let port = machine.1["port"].int16Value
@@ -34,7 +33,6 @@ class CoreDataHelpers {
                     let startTime = dateFormatter.date(from: machine.1["startTime"].stringValue) ?? Date()
                     let timeRemaining = machine.1["timeRemaining"].stringValue
                     let uniqueID = name + " " + port.description
-                    print(uniqueID)
                     let dormMachine = self.createDormMachine(port: port, label: label, description: description, status: status, startTime: startTime, timeRemaining: timeRemaining, uniqueID: uniqueID, dormName: name)
                     tempMachines.append(dormMachine)
                 }
@@ -45,11 +43,10 @@ class CoreDataHelpers {
     }
     
     class func createDormMachine(port: Int16, label: Int16, description: String, status: String, startTime: Date, timeRemaining: String, uniqueID: String, dormName: String) -> DormMachines {
-        print("called create dorm machine")
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let context = appDelegate.persistentContainer.viewContext
+        let context = appDelegate.managedObjectContext
         let fetchRequest = NSFetchRequest<DormMachines>(entityName: "DormMachines")
-        fetchRequest.predicate = NSPredicate(format: "port == %@", NSNumber(value: port))
+        fetchRequest.predicate = NSPredicate(format: "uniqueID == %@", uniqueID)
         
         if let dormMachines = try? context.fetch(fetchRequest) {
             if dormMachines.count > 0 {
@@ -65,9 +62,8 @@ class CoreDataHelpers {
     }
     
     class func createDormStatus(id: Int16, name: String, networked: String, machines: [DormMachines]) -> DormStatus{
-        print("called create dorm status")
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let context = appDelegate.persistentContainer.viewContext
+        let context = appDelegate.managedObjectContext
         let fetchRequest = NSFetchRequest<DormStatus>(entityName: "DormStatus")
         fetchRequest.predicate = NSPredicate(format: "id == %@", NSNumber(value: id))
         

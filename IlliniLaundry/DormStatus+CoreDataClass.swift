@@ -21,6 +21,5 @@ public class DormStatus: NSManagedObject {
         self.name = name
         self.networked = networked
         self.dormMachines = NSSet(array: machines)
-        print("finished initializing dorm status")
     }
 }

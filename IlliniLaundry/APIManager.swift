@@ -22,7 +22,6 @@ class APIManager {
     }
     
     func getAllStatusSuccess(json: JSON){
-        print("get all status succeded")
         CoreDataHelpers.updateAll(json: json) { () -> () in
             
         }
