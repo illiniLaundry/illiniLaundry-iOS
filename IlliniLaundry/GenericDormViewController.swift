@@ -170,6 +170,7 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
         } catch let error as NSError {
             assertionFailure("Failed to preform fetch operation, error: \(error)")
         }
+        refreshControl?.endRefreshing()
         tableView.reloadData()
     }
     
