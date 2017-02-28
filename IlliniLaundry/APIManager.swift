@@ -50,6 +50,8 @@ class APIManager {
         performRequest(method: .get, parameters: nil, success: success, failure: failure)
     }
     
+    // MARK: add supoort
+    
     // make a function called getSingleDormStaus that looks //DONE
     // just like getAllStatus
     
