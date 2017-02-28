@@ -46,8 +46,11 @@ class APIManager {
             }
         }
     }
+    func getSingleDormStatus(success: ((JSON) -> Void)?, failure: ((Error) -> Void)?) {
+        performRequest(method: .get, parameters: nil, success: success, failure: failure)
+    }
     
-    // make a function called getSingleDormStaus that looks
+    // make a function called getSingleDormStaus that looks //DONE
     // just like getAllStatus
     
     // make two functions getSingleDormStatusSuccess and ...Error
