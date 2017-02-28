@@ -47,4 +47,13 @@ class APIManager {
         }
     }
     
+    // make a function called getSingleDormStaus that looks
+    // just like getAllStatus
+    
+    // make two functions getSingleDormStatusSuccess and ...Error
+    // that look just like getAllStatusSuccess and ... Error
+    // but it will call CoreDataHelpers.updateSingleDorm
+    
+    // make a function called updateSingleDorm in CoreDataHelpers
+    
 }

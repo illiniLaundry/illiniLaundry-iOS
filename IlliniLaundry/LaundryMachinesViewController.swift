@@ -13,7 +13,7 @@ class LaundryMachineViewController: ButtonBarPagerTabStripViewController {
     
     
     let selectedBarColor = hexToUIColor(IllinoisOrange)
-    
+
     override func viewDidLoad() {
         settings.style.buttonBarBackgroundColor = .white
         settings.style.buttonBarItemBackgroundColor = .white

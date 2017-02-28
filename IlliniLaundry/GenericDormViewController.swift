@@ -191,7 +191,7 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
         if let cell = cell as? LaundryMachineCell {
             cell.timeRemainingLabel.text = machine.timeRemaining
         }
-        
+        cell.layoutIfNeeded()
         return cell
     }
     
