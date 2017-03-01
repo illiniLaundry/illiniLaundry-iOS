@@ -193,7 +193,7 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if(indexPath.row < 1) {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "LaundryMachineCell", for: IndexPath(row: 1, section: 0))
+            let cell = tableView.dequeueReusableCell(withIdentifier: "LaundryMachineCell", for: IndexPath(row: 0, section: 0))
             return cell
         }
         let offsetIndexPath = IndexPath(row: indexPath.row - 1, section: indexPath.section);
