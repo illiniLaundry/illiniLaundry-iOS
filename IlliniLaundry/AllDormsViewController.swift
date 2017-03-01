@@ -10,24 +10,46 @@ import UIKit
 import XLPagerTabStrip
 import CoreData
 
-class AllDormsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate, IndicatorInfoProvider {
-
-
-
+class AllDormsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, NSFetchedResultsControllerDelegate, IndicatorInfoProvider {
     
-    var refreshControl: UIRefreshControl = UIRefreshControl()
-    @IBOutlet weak var allDormsTableView: UITableView!
+
+    @IBOutlet weak var collectionView: UICollectionView!
+    
+    fileprivate let sectionInsets = UIEdgeInsets(top: 15.0, left: 5.0, bottom: 15.0, right: 5.0)
+    fileprivate let itemsPerRow: CGFloat = 3
+    
+    
+    let refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad();
-        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        self.refreshControl.tintColor = UIColor.white;
-        self.refreshControl.addTarget(self, action: #selector(self.refresh), for: UIControlEvents.valueChanged)
-        self.allDormsTableView.insertSubview(refreshControl, at: 0)
-        allDormsTableView.delegate = self
-        allDormsTableView.dataSource = self
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        self.automaticallyAdjustsScrollViewInsets = false
+        let w = collectionView!.bounds.width
+        
+        let paddingSpace = sectionInsets.left * (itemsPerRow + 1)
+        let availableWidth = w - paddingSpace
+        let widthPerItem = availableWidth / itemsPerRow
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.sectionInset = sectionInsets
+        
+        layout.itemSize = CGSize(width:widthPerItem,height:widthPerItem * 1.2)
+        layout.minimumInteritemSpacing = sectionInsets.left
+        layout.minimumLineSpacing = sectionInsets.left
+        
+        collectionView!.collectionViewLayout = layout
+        
+        self.collectionView!.alwaysBounceVertical = true
+        refreshControl.addTarget(self, action: #selector(AllDormsViewController.refresh), for: .valueChanged)
+        collectionView!.addSubview(refreshControl)
+        
+        
         fetch()
 
+    }
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        return IndicatorInfo(title: "All Dorms")
     }
     
     func refresh() {
@@ -39,36 +61,11 @@ class AllDormsViewController: UIViewController, UITableViewDelegate, UITableView
         super.didReceiveMemoryWarning();
     }
     
-    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
-        return IndicatorInfo(title: "All Dorms")
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return fetchedResultsController.sections?.count ?? 0
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return fetchedResultsController.sections?[section].numberOfObjects ?? 0
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        allDormsTableView.deselectRow(at: indexPath, animated: true)
-        //        performSegue(withIdentifier: "showEventDetails", sender: indexPath)
-    }
-    
-    //    lazy var dormsPrivateMoc: NSManagedObjectContext = {
-    //        var dormsPrivateMoc = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-    //        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    //        dormsPrivateMoc.persistentStoreCoordinator = appDelegate.persistentStoreCoordinator
-    //        dormsPrivateMoc.mergePolicy = NSOverwriteMergePolicy
-    //        return dormsPrivateMoc
-    //    }()
-    
     lazy var fetchedResultsController: NSFetchedResultsController<DormStatus> = {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         
         let fetchRequest = NSFetchRequest<DormStatus>(entityName: "DormStatus")
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "id", ascending: true)]
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
 //        fetchRequest.includesSubentities = false
         
         
@@ -90,101 +87,129 @@ class AllDormsViewController: UIViewController, UITableViewDelegate, UITableView
         } catch let error as NSError {
             assertionFailure("Failed to preform fetch operation, error: \(error)")
         }
+        self.collectionView.reloadData()
         refreshControl.endRefreshing()
-        allDormsTableView.reloadData()
-    }
-    
-    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        //        OperationQueue.main.addOperation { () -> Void in
-        self.allDormsTableView.beginUpdates()
-        //        }
     }
     
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        if(indexPath.row < 1) {
-            let cell = allDormsTableView.dequeueReusableCell(withIdentifier: "loadingCell", for: IndexPath(row: 0, section:0))
-            return cell
-        }
-        if(indexPath.row * 3 <= (fetchedResultsController.fetchedObjects?.count)! ) {
-            let cell = allDormsTableView.dequeueReusableCell(withIdentifier: "threeDormCell", for: indexPath) as! ThreeDormCell
-            let firstOffset = IndexPath(row: indexPath.row - 1, section: indexPath.section)
-            let thirdOffset = IndexPath(row: indexPath.row + 1, section: indexPath.section)
-            cell.configure(first: fetchedResultsController.object(at: firstOffset), second: fetchedResultsController.object(at: indexPath), third: fetchedResultsController.object(at:thirdOffset))
-                return cell
-        } else if((fetchedResultsController.fetchedObjects?.count)! % 3 == 1) {
-            let cell = allDormsTableView.dequeueReusableCell(withIdentifier: "twoDormCell", for: indexPath) as! TwoDormCell
-            let firstOffset = IndexPath(row: indexPath.row - 1, section: indexPath.section)
-            cell.configure(first: fetchedResultsController.object(at: firstOffset), second: fetchedResultsController.object(at: indexPath))
-            return cell
-        } else {
-            let cell = allDormsTableView.dequeueReusableCell(withIdentifier: "oneDormCell", for: indexPath) as! OneDormCell
-            let firstOffset = IndexPath(row: indexPath.row - 1, section: indexPath.section)
-            cell.configure(first: fetchedResultsController.object(at: firstOffset))
-            return cell
-        }
-
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return fetchedResultsController.sections?.count ?? 0
     }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return fetchedResultsController.sections?[section].numberOfObjects ?? 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "dormCell", for: indexPath) as! DormCell
+        cell.configure(dorm: fetchedResultsController.object(at: indexPath))
+        cell.dormLabel.allowsDefaultTighteningForTruncation = true
+        cell.layoutIfNeeded()
+        return cell
+    }
+    
+    var blockOperations: [BlockOperation] = []
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        switch type {
-        case .insert:
-            guard let insertIndexPath = newIndexPath else { return }
-            allDormsTableView.insertRows(at: [insertIndexPath], with: .fade)
-        case .delete:
-            guard let deleteIndexPath = indexPath else { return }
-            allDormsTableView.deleteRows(at: [deleteIndexPath], with: .fade)
-        case .update:
-            guard let updateIndexPath = indexPath, let cell = allDormsTableView.cellForRow(at: updateIndexPath) else { return }
-            if(updateIndexPath.row <= 0) {
-                return
-            }
-            
-            if((indexPath?.row)! * 3 <= (fetchedResultsController.fetchedObjects?.count)! ) {
-                let cell = cell as! ThreeDormCell
-                let firstOffset = IndexPath(row: (indexPath?.row)! - 1, section: (indexPath?.section)!)
-                let thirdOffset = IndexPath(row: (indexPath?.row)! + 1, section: (indexPath?.section)!)
-                cell.configure(first: fetchedResultsController.object(at: firstOffset), second: fetchedResultsController.object(at: indexPath!), third: fetchedResultsController.object(at:thirdOffset))
-            } else if((fetchedResultsController.fetchedObjects?.count)! % 3 == 1) {
-                let cell = cell as! TwoDormCell
-                let firstOffset = IndexPath(row: (indexPath?.row)! - 1, section: (indexPath?.section)!)
-                cell.configure(first: fetchedResultsController.object(at: firstOffset), second: fetchedResultsController.object(at: indexPath!))
-            } else {
-                let cell = cell as! OneDormCell
-                let firstOffset = IndexPath(row: (indexPath?.row)! - 1, section: (indexPath?.section)!)
-                cell.configure(first: fetchedResultsController.object(at: firstOffset))
-            }
-            allDormsTableView.reloadRows(at: [updateIndexPath], with: .fade)
-        case .move:
-            guard let fromIndexPath = indexPath, let toIndexPath = newIndexPath else { return }
-            allDormsTableView.insertRows(at: [toIndexPath],   with: .fade)
-            allDormsTableView.deleteRows(at: [fromIndexPath], with: .fade)
-        }
         
+        if type == NSFetchedResultsChangeType.insert {
+            print("Insert Object: \(newIndexPath)")
+            
+            blockOperations.append(
+                BlockOperation(block: { [weak self] in
+                    if let this = self {
+                        this.collectionView!.insertItems(at: [newIndexPath!])
+                    }
+                })
+            )
+        }
+        else if type == NSFetchedResultsChangeType.update {
+            print("Update Object: \(indexPath)")
+            blockOperations.append(
+                BlockOperation(block: { [weak self] in
+                    if let this = self {
+                        this.collectionView!.reloadItems(at: [indexPath!])
+                    }
+                })
+            )
+        }
+        else if type == NSFetchedResultsChangeType.move {
+            print("Move Object: \(indexPath)")
+            
+            blockOperations.append(
+                BlockOperation(block: { [weak self] in
+                    if let this = self {
+                        this.collectionView!.moveItem(at: indexPath!, to: newIndexPath!)
+                    }
+                })
+            )
+        }
+        else if type == NSFetchedResultsChangeType.delete {
+            print("Delete Object: \(indexPath)")
+            
+            blockOperations.append(
+                BlockOperation(block: { [weak self] in
+                    if let this = self {
+                        this.collectionView!.deleteItems(at: [indexPath!])
+                    }
+                })
+            )
+        }
     }
     
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
-        switch type {
-        case .insert:
-            allDormsTableView.insertSections([sectionIndex], with: .fade)
-        case .delete:
-            allDormsTableView.deleteSections([sectionIndex], with: .fade)
-        case .update:
-            allDormsTableView.reloadSections([sectionIndex], with: .fade)
-        case .move:
-            break
+    public func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
+        
+        
+        if type == NSFetchedResultsChangeType.insert {
+            print("Insert Section: \(sectionIndex)")
+            
+            blockOperations.append(
+                BlockOperation(block: { [weak self] in
+                    if let this = self {
+                        this.collectionView!.insertSections(NSIndexSet(index: sectionIndex) as IndexSet)
+                    }
+                })
+            )
+        }
+        else if type == NSFetchedResultsChangeType.update {
+            print("Update Section: \(sectionIndex)")
+            blockOperations.append(
+                BlockOperation(block: { [weak self] in
+                    if let this = self {
+                        this.collectionView!.reloadSections(NSIndexSet(index: sectionIndex) as IndexSet)
+                    }
+                })
+            )
+        }
+        else if type == NSFetchedResultsChangeType.delete {
+            print("Delete Section: \(sectionIndex)")
+            
+            blockOperations.append(
+                BlockOperation(block: { [weak self] in
+                    if let this = self {
+                        this.collectionView!.deleteSections(NSIndexSet(index: sectionIndex) as IndexSet)
+                    }
+                })
+            )
         }
     }
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        //        OperationQueue.main.addOperation { () -> Void in
-        self.allDormsTableView.endUpdates()
-        //        }
+        collectionView!.performBatchUpdates({ () -> Void in
+            for operation: BlockOperation in self.blockOperations {
+                operation.start()
+            }
+        }, completion: { (finished) -> Void in
+            self.blockOperations.removeAll(keepingCapacity: false)
+        })
     }
-
     
-    
-    
+    deinit {
+        for operation: BlockOperation in blockOperations {
+            operation.cancel()
+        }
+        
+        blockOperations.removeAll(keepingCapacity: false)
+    }
     
 }
