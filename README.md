@@ -34,7 +34,8 @@ $ open IlliniLaundry.xcworkspace
 1. Add fetching for single dorms
 2. Add favorites and implement MyDormsViewController
 3. Fully implement GenericDormViewController once fetching single dorm is supported
-4. Comment and refactor code more thoroughly
+4. Find the proper place to add endRefreshing
+5. Comment and refactor code more thoroughly
 
 ## Pages
 
