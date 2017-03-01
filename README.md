@@ -1,5 +1,7 @@
 # IlliniLaundry - iOS version
 Tired of checking the laundryalert website? Try out IlliniLaundry!
+
+
 Available on the Apple appstore soon.
 ## Requirements
 
@@ -27,6 +29,12 @@ $ pod install --no-repo-update
 $ cd /to/cloned/directory/IlliniLaundry
 $ open IlliniLaundry.xcworkspace
 ```
+## TODOs
+
+1. Add fetching for single dorms
+2. Add favorites and implement MyDormsViewController
+3. Fully implement GenericDormViewController once fetching single dorm is supported
+4. Comment and refactor code more thoroughly
 
 ## Pages
 
@@ -35,9 +43,9 @@ $ open IlliniLaundry.xcworkspace
 3. [GenericDormViewController] (#GenericDormViewController)
 
 ### AllDormsViewController
-Displays all dorms in a scrollview, three dorms per row.
+Displays all dorms in a collectionView, three dorms per row.
 ### MyDormsViewController
-Displays all dorms that the user has favorited in a scrollview, one dorm per row.
+Displays all dorms that the user has favorited in a collectionView, one dorm per row.
 ### GenericDormViewController
 Displays all laundry and dryer machines and their status in a scrollview.
 This view is generic and programmatically populated during runtime as needed.
