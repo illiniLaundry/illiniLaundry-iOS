@@ -192,11 +192,11 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if(indexPath.row < 1) {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "LaundryMachineCell", for: IndexPath(row: 0, section: 0))
-            return cell
-        }
-        let offsetIndexPath = IndexPath(row: indexPath.row - 1, section: indexPath.section);
+//        if(indexPath.row < 1) {
+//            let cell = tableView.dequeueReusableCell(withIdentifier: "LaundryMachineCell", for: IndexPath(row: 0, section: 0))
+//            return cell
+//        }
+        let offsetIndexPath = IndexPath(row: indexPath.row, section: indexPath.section);
         let machine = fetchedResultsController.object(at: offsetIndexPath)
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "LaundryMachineCell", for: indexPath)
@@ -218,11 +218,11 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
             tableView.deleteRows(at: [deleteIndexPath], with: .fade)
         case .update:
             guard let updateIndexPath = indexPath, let cell = tableView.cellForRow(at: updateIndexPath) else { return }
-            if(updateIndexPath.row <= 0) {
-                return
-            }
-            let offsetIndexPath = IndexPath(row: updateIndexPath.row - 1, section: updateIndexPath.section);
-            let dormMachine = fetchedResultsController.object(at: offsetIndexPath)
+//            if(updateIndexPath.row <= 0) {
+//                return
+//            }
+//            let offsetIndexPath = IndexPath(row: updateIndexPath.row - 1, section: updateIndexPath.section);
+            let dormMachine = fetchedResultsController.object(at: updateIndexPath)
             
             if let cell = cell as? LaundryMachineCell {
                 cell.timeRemainingLabel.text = dormMachine.timeRemaining
