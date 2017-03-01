@@ -31,10 +31,13 @@ $ open IlliniLaundry.xcworkspace
 ## Pages
 
 1. [AllDormsViewController] (#AllDormsViewController)
+
 Display all dorms
 2. [MyDormsViewController] (#MyDormsViewController)
+
 Display my dorms
 3. [GenericDormViewController] (#GenericDormViewController)
+
 Display laundry status of one dorm
 
 ### AllDormsViewController
