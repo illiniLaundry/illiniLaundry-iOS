@@ -13,7 +13,7 @@ import CoreData
 public class DormStatus: NSManagedObject {
     
     func update(machines: [DormMachines]) {
-        self.dormMachines = NSSet(array: machines)
+        self.setValue(NSSet(array: machines), forKey: "dormMachines")
     }
     
     func initialize(id: Int16, name: String, networked: String, machines: [DormMachines]) {

@@ -13,8 +13,8 @@ import CoreData
 public class DormMachines: NSManagedObject {
     
     func update(startTime: Date, timeRemaining: String) {
-        self.startTime = startTime;
-        self.timeRemaining = timeRemaining;
+        self.setValue(startTime, forKey: "startTime")
+        self.setValue(timeRemaining, forKey: "timeRemaining")
     }
     
     func initialize(port: Int16, label: Int16, description: String, status: String, startTime: Date, timeRemaining: String, uniqueID: String, dormName: String) {

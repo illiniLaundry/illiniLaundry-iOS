@@ -12,7 +12,6 @@ import SwiftyJSON
 import Alamofire
 
 class GenericDormViewController: UITableViewController, NSFetchedResultsControllerDelegate{
-    
     var mTimer = Timer()
     var dateFormatter = DateFormatter()
     lazy var dormName = ""
@@ -146,10 +145,16 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
 //        performSegue(withIdentifier: "showEventDetails", sender: indexPath)
     }
     
+//    lazy var dormsPrivateMoc: NSManagedObjectContext = {
+//        var dormsPrivateMoc = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+//        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+//        dormsPrivateMoc.persistentStoreCoordinator = appDelegate.persistentStoreCoordinator
+//        dormsPrivateMoc.mergePolicy = NSOverwriteMergePolicy
+//        return dormsPrivateMoc
+//    }()
+    
     lazy var fetchedResultsController: NSFetchedResultsController<DormMachines> = {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let context = appDelegate.managedObjectContext
-        
         
         let fetchRequest = NSFetchRequest<DormMachines>(entityName: "DormMachines")
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "port", ascending: true)]
@@ -157,13 +162,19 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
         
         fetchRequest.predicate = NSPredicate(format: "dormName == %@", "ISR: Wardall")
         
-        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: appDelegate.managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
         frc.delegate = self
+        do {
+            try frc.performFetch()
+        }
+        catch let error as NSError {
+            print("error performing fetch: \(error)")
+        }
         return frc
     }()
     
     func fetch() {
-        printData()
+//        printData()
         print("called fetch")
         do {
             try fetchedResultsController.performFetch()
@@ -175,7 +186,9 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
     }
     
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.beginUpdates()
+//        OperationQueue.main.addOperation { () -> Void in
+            self.tableView.beginUpdates()
+//        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -238,12 +251,9 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
     }
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.endUpdates()
+//        OperationQueue.main.addOperation { () -> Void in
+            self.tableView.endUpdates()
+//        }
     }
-    
-    
-    
-    
-
 }
 

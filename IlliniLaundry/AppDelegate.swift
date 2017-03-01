@@ -17,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 //        mTimer = Timer.scheduledTimer(timeInterval: 10, target:self, selector: #selector(updateAllDorms), userInfo: nil, repeats: true)
+        self.listenForMocSavedNotification()
         return true
     }
     
@@ -97,12 +98,49 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let coordinator = self.persistentStoreCoordinator
         var managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
         managedObjectContext.persistentStoreCoordinator = coordinator
-        managedObjectContext.mergePolicy = NSOverwriteMergePolicy // Newest data is what should be used
+        managedObjectContext.mergePolicy = NSOverwriteMergePolicy
         return managedObjectContext
+    }()
+    
+    lazy var privateContext : NSManagedObjectContext = {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let privateContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        privateContext.persistentStoreCoordinator = appDelegate.persistentStoreCoordinator
+        privateContext.mergePolicy = NSOverwriteMergePolicy
+        privateContext.undoManager = nil
+        return privateContext
+    }()
+    
+    private func listenForMocSavedNotification()
+    {
+        notificationCenter.addObserver(self, selector: #selector(contextDidSave), name: NSNotification.Name.NSManagedObjectContextDidSave, object: privateContext)
+    }
+    
+    final func contextDidSave(note: NSNotification)
+    {
+        if (note.object as AnyObject).isEqual(managedObjectContext) {
+            print("didn't save")
+            return
+        }
+        
+        managedObjectContext.perform { () -> Void in
+            self.managedObjectContext.mergeChanges(fromContextDidSave: note as Notification)
+        }
+    }
+    
+    deinit
+    {
+        notificationCenter.removeObserver(self)
+    }
+    
+    private lazy var notificationCenter: NotificationCenter =
+        {
+            return NotificationCenter.default
     }()
     
     // MARK: - Core Data Saving support
     func saveContext () {
+        print("saving main context")
         if managedObjectContext.hasChanges {
             do {
                 try managedObjectContext.save()

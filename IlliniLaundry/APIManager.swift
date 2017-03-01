@@ -13,6 +13,8 @@ import SwiftyJSON
 class APIManager {
     static let shared = APIManager()
     
+    let operationQueue = OperationQueue()
+    
     private let LAUNDRY_URL = "http://23.23.147.128/homes/mydata/urba7723"
     
     private init() { }
@@ -22,9 +24,13 @@ class APIManager {
     }
     
     func getAllStatusSuccess(json: JSON){
-        CoreDataHelpers.updateAll(json: json) { () -> () in
-            
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let privateContext = appDelegate.privateContext
+        privateContext.perform {
+            CoreDataHelpers.updateAll(json: json) { () -> () in
+            }
         }
+
     }
     
     func getAllStatusError(error: Error) {
