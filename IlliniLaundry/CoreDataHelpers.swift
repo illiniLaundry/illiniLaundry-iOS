@@ -50,7 +50,7 @@ class CoreDataHelpers {
         let fetchRequest = NSFetchRequest<DormMachines>(entityName: "DormMachines")
         fetchRequest.predicate = NSPredicate(format: "uniqueID == %@", uniqueID)
 
-//        
+        // TODO: check if setValue is different from update
         if let dormMachines = try? privateContext.fetch(fetchRequest) {
             if dormMachines.count > 0 {
                 dormMachines[0].setValue(timeRemaining, forKey: "timeRemaining")
@@ -75,7 +75,7 @@ class CoreDataHelpers {
     class func createDormStatus(id: Int16, name: String, networked: String, machines: [DormMachines]) -> DormStatus{
         let fetchRequest = NSFetchRequest<DormStatus>(entityName: "DormStatus")
         fetchRequest.predicate = NSPredicate(format: "id == %@", NSNumber(value: id))
-        
+        // TODO: check if setValue is different from update
         if let dormStatuses = try? privateContext.fetch(fetchRequest) {
             if dormStatuses.count > 0 {
                 dormStatuses[0].setValue(NSSet(array: machines), forKey: "dormMachines")

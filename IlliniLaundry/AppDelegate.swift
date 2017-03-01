@@ -140,7 +140,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: - Core Data Saving support
     func saveContext () {
-        print("saving main context")
         if managedObjectContext.hasChanges {
             do {
                 try managedObjectContext.save()

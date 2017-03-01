@@ -75,13 +75,12 @@ class AllDormsViewController: UIViewController, UICollectionViewDelegate, UIColl
             try frc.performFetch()
         }
         catch let error as NSError {
-            print("error performing fetch: \(error)")
+            print("error performing fetch: \(error.localizedDescription)")
         }
         return frc
     }()
     
     func fetch() {
-        print("called fetch")
         do {
             try fetchedResultsController.performFetch()
         } catch let error as NSError {
@@ -113,8 +112,6 @@ class AllDormsViewController: UIViewController, UICollectionViewDelegate, UIColl
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         
         if type == NSFetchedResultsChangeType.insert {
-            print("Insert Object: \(newIndexPath)")
-            
             blockOperations.append(
                 BlockOperation(block: { [weak self] in
                     if let this = self {
@@ -124,7 +121,6 @@ class AllDormsViewController: UIViewController, UICollectionViewDelegate, UIColl
             )
         }
         else if type == NSFetchedResultsChangeType.update {
-            print("Update Object: \(indexPath)")
             blockOperations.append(
                 BlockOperation(block: { [weak self] in
                     if let this = self {
@@ -134,8 +130,6 @@ class AllDormsViewController: UIViewController, UICollectionViewDelegate, UIColl
             )
         }
         else if type == NSFetchedResultsChangeType.move {
-            print("Move Object: \(indexPath)")
-            
             blockOperations.append(
                 BlockOperation(block: { [weak self] in
                     if let this = self {
@@ -145,8 +139,6 @@ class AllDormsViewController: UIViewController, UICollectionViewDelegate, UIColl
             )
         }
         else if type == NSFetchedResultsChangeType.delete {
-            print("Delete Object: \(indexPath)")
-            
             blockOperations.append(
                 BlockOperation(block: { [weak self] in
                     if let this = self {
@@ -161,8 +153,6 @@ class AllDormsViewController: UIViewController, UICollectionViewDelegate, UIColl
         
         
         if type == NSFetchedResultsChangeType.insert {
-            print("Insert Section: \(sectionIndex)")
-            
             blockOperations.append(
                 BlockOperation(block: { [weak self] in
                     if let this = self {
@@ -172,7 +162,6 @@ class AllDormsViewController: UIViewController, UICollectionViewDelegate, UIColl
             )
         }
         else if type == NSFetchedResultsChangeType.update {
-            print("Update Section: \(sectionIndex)")
             blockOperations.append(
                 BlockOperation(block: { [weak self] in
                     if let this = self {
@@ -182,8 +171,6 @@ class AllDormsViewController: UIViewController, UICollectionViewDelegate, UIColl
             )
         }
         else if type == NSFetchedResultsChangeType.delete {
-            print("Delete Section: \(sectionIndex)")
-            
             blockOperations.append(
                 BlockOperation(block: { [weak self] in
                     if let this = self {

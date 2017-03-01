@@ -34,7 +34,7 @@ class APIManager {
     }
     
     func getAllStatusError(error: Error) {
-        print("get all status failed")
+        print("get all status failed \(error.localizedDescription)")
     }
     
     

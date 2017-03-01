@@ -95,7 +95,6 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
         if let swipeGesture = gesture as? UISwipeGestureRecognizer {
             switch swipeGesture.direction {
             case UISwipeGestureRecognizerDirection.right:
-                print("Swiped right")
                 let transition: CATransition = CATransition()
                 transition.duration = 0.2
                 transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
@@ -105,7 +104,6 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
                 self.dismiss(animated: false, completion: nil)
                 
             case UISwipeGestureRecognizerDirection.left:
-                print("Swiped left")
                 let transition: CATransition = CATransition()
                 transition.duration = 0.2
                 transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
@@ -175,7 +173,6 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
     
     func fetch() {
 //        printData()
-        print("called fetch")
         do {
             try fetchedResultsController.performFetch()
         } catch let error as NSError {
