@@ -1,6 +1,6 @@
 # IlliniLaundry - iOS version
-The previous iOS dev team failed to deliver a final product so a team of new developers was assigned to this project.
-
+Tired of checking the laundryalert website? Try out IlliniLaundry!
+Available on the Apple appstore soon.
 ## Requirements
 
 1. Cocoapods 1.0 +
@@ -9,7 +9,7 @@ The previous iOS dev team failed to deliver a final product so a team of new dev
 5. iOS 9.0 +
 
 ## How to install
-
+*Note: Ctrl+C command should be inputted about five seconds after pod setup*
 ``` shell
 $ cd /to/cloned/directory/IlliniLaundry
 $ pod setup
@@ -45,3 +45,5 @@ Displays all dorms that the user has favorited in a scrollview, one dorm per row
 Displays all laundry and dryer machines and their status in a scrollview.
 This view is generic and programmatically populated during runtime as needed.
 
+## Special Thanks
+Everyone who helped our team along the way. Thank you for letting us bring to life something great.
