@@ -37,7 +37,6 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
         self.dateFormatter.timeStyle = .long
         
         self.refreshControl = UIRefreshControl()
-        self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh")
         self.refreshControl?.tintColor = UIColor.white;
         self.refreshControl?.addTarget(self, action: #selector(self.refresh), for: UIControlEvents.valueChanged)
         self.tableView.insertSubview(refreshControl!, at: 0)
@@ -178,7 +177,7 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
         } catch let error as NSError {
             assertionFailure("Failed to preform fetch operation, error: \(error)")
         }
-        refreshControl?.endRefreshing()
+        self.perform(#selector(endRefresh), with: nil, afterDelay: 1)
         tableView.reloadData()
     }
     
@@ -186,6 +185,10 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
 //        OperationQueue.main.addOperation { () -> Void in
             self.tableView.beginUpdates()
 //        }
+    }
+    
+    func endRefresh() {
+        self.refreshControl?.endRefreshing()
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -249,7 +252,8 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
 //        OperationQueue.main.addOperation { () -> Void in
-            self.tableView.endUpdates()
+        self.refreshControl?.endRefreshing()
+        self.tableView.endUpdates()
 //        }
     }
 }

@@ -77,6 +77,7 @@ class AllDormsViewController: UIViewController, UICollectionViewDelegate, UIColl
         catch let error as NSError {
             print("error performing fetch: \(error.localizedDescription)")
         }
+        
         return frc
     }()
     
@@ -89,9 +90,12 @@ class AllDormsViewController: UIViewController, UICollectionViewDelegate, UIColl
         
         self.collectionView.reloadData()
         
-        self.refreshControl.endRefreshing()
+        self.perform(#selector(endRefresh), with: nil, afterDelay: 1)
     }
     
+    func endRefresh() {
+        self.refreshControl.endRefreshing()
+    }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return fetchedResultsController.sections?.count ?? 0
@@ -189,6 +193,7 @@ class AllDormsViewController: UIViewController, UICollectionViewDelegate, UIColl
                 operation.start()
             }
         }, completion: { (finished) -> Void in
+            self.refreshControl.endRefreshing()
             self.blockOperations.removeAll(keepingCapacity: false)
         })
     }
