@@ -178,7 +178,7 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
             assertionFailure("Failed to preform fetch operation, error: \(error)")
         }
         self.perform(#selector(endRefresh), with: nil, afterDelay: 1)
-        tableView.reloadData()
+//        tableView.reloadData()
     }
     
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
