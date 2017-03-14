@@ -45,7 +45,6 @@ class AllDormsViewController: UIViewController, UICollectionViewDelegate, UIColl
         refreshControl.addTarget(self, action: #selector(AllDormsViewController.refresh), for: .valueChanged)
         collectionView!.addSubview(refreshControl)
         
-        
         fetch()
 
     }
@@ -106,6 +105,10 @@ class AllDormsViewController: UIViewController, UICollectionViewDelegate, UIColl
         return fetchedResultsController.sections?[section].numberOfObjects ?? 0
     }
     
+    func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "dormCell", for: indexPath) as! DormCell
         cell.configure(dorm: fetchedResultsController.object(at: indexPath))
@@ -128,6 +131,7 @@ class AllDormsViewController: UIViewController, UICollectionViewDelegate, UIColl
         cell.layoutIfNeeded()
         return cell
     }
+    
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let dormView = UIStoryboard(name:"GenericDorm", bundle: nil).instantiateViewController(withIdentifier: "genericDormNavigationController") as! UINavigationController;

@@ -206,7 +206,6 @@
 				390A8E421E48362700018855 /* AllDormsViewController.swift */,
 				390A8E441E48363400018855 /* MyDormsViewController.swift */,
 				390A8E461E48373600018855 /* Dorms.storyboard */,
-				39A413681E77B09A0013DB7B /* GenericFavoritesDormCell.swift */,
 			);
 			name = DormView;
 			sourceTree = "<group>";
@@ -245,6 +244,7 @@
 		39AA0AD91E6683EC00E548D6 /* customcells */ = {
 			isa = PBXGroup;
 			children = (
+				39A413681E77B09A0013DB7B /* GenericFavoritesDormCell.swift */,
 				39AA0AE21E66A89A00E548D6 /* DormCell.swift */,
 			);
 			name = customcells;
