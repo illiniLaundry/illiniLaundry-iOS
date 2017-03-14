@@ -15,7 +15,7 @@ class AllDormsViewController: UIViewController, UICollectionViewDelegate, UIColl
 
     @IBOutlet weak var collectionView: UICollectionView!
     
-    fileprivate let sectionInsets = UIEdgeInsets(top: 15.0, left: 5.0, bottom: 15.0, right: 5.0)
+    fileprivate let sectionInsets = UIEdgeInsets(top: 10.0, left: 0.0, bottom: 10.0, right: 10.0)
     fileprivate let itemsPerRow: CGFloat = 3
     
     
@@ -26,17 +26,18 @@ class AllDormsViewController: UIViewController, UICollectionViewDelegate, UIColl
         collectionView.delegate = self
         collectionView.dataSource = self
         self.automaticallyAdjustsScrollViewInsets = false
-        let w = collectionView!.bounds.width
+        let w = collectionView?.contentSize.width
         
         let paddingSpace = sectionInsets.left * (itemsPerRow + 1)
-        let availableWidth = w - paddingSpace
+        let availableWidth = w! - paddingSpace
         let widthPerItem = availableWidth / itemsPerRow
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.sectionInset = sectionInsets
         
         layout.itemSize = CGSize(width:widthPerItem,height:widthPerItem * 1.2)
-        layout.minimumInteritemSpacing = sectionInsets.left
-        layout.minimumLineSpacing = sectionInsets.left
+        
+//        layout.minimumInteritemSpacing = sectionInsets.left
+        layout.minimumLineSpacing = sectionInsets.bottom
         
         collectionView!.collectionViewLayout = layout
         
