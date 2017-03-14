@@ -85,7 +85,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IWO-PM-vVE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="149.59999999999999" y="-190.25487256371815"/>
+            <point key="canvasLocation" x="82" y="-190"/>
         </scene>
         <!--My Dorms View Controller-->
         <scene sceneID="pgj-2N-Q7b">

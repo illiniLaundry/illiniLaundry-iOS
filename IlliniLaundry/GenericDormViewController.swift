@@ -14,7 +14,7 @@ import Alamofire
 class GenericDormViewController: UITableViewController, NSFetchedResultsControllerDelegate{
     var mTimer = Timer()
     var dateFormatter = DateFormatter()
-    lazy var dormName = ""
+    static var dormName = ""
     
     let kTableHeaderHeight: CGFloat = 300.0
     let attributes = [NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: UIFont(name: "Helvetica", size: 15)]
@@ -32,6 +32,10 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.dormNameLabel.text = GenericDormViewController.dormName
+        
+        self.navigationController?.navigationBar.isTranslucent = false
         
         self.dateFormatter.dateStyle = .short
         self.dateFormatter.timeStyle = .long
@@ -157,7 +161,7 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "port", ascending: true)]
 //        fetchRequest.includesSubentities = false
         
-        fetchRequest.predicate = NSPredicate(format: "dormName == %@", "ISR: Wardall")
+        fetchRequest.predicate = NSPredicate(format: "dormName == %@", dormName )
         
         let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: appDelegate.managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
         frc.delegate = self

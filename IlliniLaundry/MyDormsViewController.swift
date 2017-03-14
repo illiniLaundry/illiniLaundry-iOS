@@ -25,7 +25,7 @@ class MyDormsViewController: UIViewController, IndicatorInfoProvider{
     }
     
     @IBAction func DormView(_ sender: Any) {
-        let dormView = UIStoryboard(name:"GenericDorm", bundle: nil).instantiateViewController(withIdentifier: "GenericDormViewController");
+        let dormView = UIStoryboard(name:"GenericDorm", bundle: nil).instantiateViewController(withIdentifier: "genericDormNavigationController");
         self.present(dormView, animated:true, completion:nil);
     }
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Wa5-Cf-dFI">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="98Y-jf-HM4">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -14,7 +14,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="GenericDormViewController" id="Wa5-Cf-dFI" customClass="GenericDormViewController" customModule="IlliniLaundry" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="htk-S2-jH8">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="kvi-LA-RJK">
@@ -24,21 +24,13 @@
                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="header_Sample" translatesAutoresizingMaskIntoConstraints="NO" id="EzR-B9-2aV">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="300"/>
                                 </imageView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sample Dorm" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7BJ-si-c6X">
-                                    <rect key="frame" x="20" y="20" width="155" height="29"/>
-                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
-                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
-                                <constraint firstItem="7BJ-si-c6X" firstAttribute="top" secondItem="kvi-LA-RJK" secondAttribute="top" constant="20" id="CD4-Mf-Le0"/>
                                 <constraint firstAttribute="trailing" secondItem="EzR-B9-2aV" secondAttribute="trailing" id="Ghs-fI-cKs"/>
                                 <constraint firstItem="EzR-B9-2aV" firstAttribute="leading" secondItem="kvi-LA-RJK" secondAttribute="leading" id="ISj-l6-gdP"/>
                                 <constraint firstAttribute="bottom" secondItem="EzR-B9-2aV" secondAttribute="bottom" id="SzM-ki-zf8"/>
                                 <constraint firstItem="EzR-B9-2aV" firstAttribute="top" secondItem="kvi-LA-RJK" secondAttribute="top" id="k0h-Bc-CFa"/>
-                                <constraint firstItem="7BJ-si-c6X" firstAttribute="leading" secondItem="kvi-LA-RJK" secondAttribute="leading" constant="20" id="kUE-fa-8YP"/>
                             </constraints>
                         </view>
                         <prototypes>
@@ -71,19 +63,65 @@
                             <outlet property="delegate" destination="Wa5-Cf-dFI" id="iG7-aN-giU"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" id="wqQ-9J-Klu">
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="EyU-wq-FhU">
+                            <view key="customView" opaque="NO" alpha="0.0" contentMode="scaleToFill" id="xRB-s4-elh">
+                                <rect key="frame" x="16" y="5" width="200" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="illiniLaundry" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tZB-k9-1JP">
+                                        <rect key="frame" x="0.0" y="0.0" width="200" height="33"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="tZB-k9-1JP" firstAttribute="top" secondItem="xRB-s4-elh" secondAttribute="top" id="8ld-pL-X9X"/>
+                                    <constraint firstAttribute="bottom" secondItem="tZB-k9-1JP" secondAttribute="bottom" id="Soh-kb-G7L"/>
+                                    <constraint firstItem="tZB-k9-1JP" firstAttribute="leading" secondItem="xRB-s4-elh" secondAttribute="leading" id="SsV-Bv-2m9"/>
+                                    <constraint firstAttribute="trailing" secondItem="tZB-k9-1JP" secondAttribute="trailing" id="aWb-gA-g5o"/>
+                                </constraints>
+                            </view>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="RvS-Lj-n7E">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </barButtonItem>
+                    </navigationItem>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="k0X-XG-onf">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </refreshControl>
                     <connections>
                         <outlet property="dormImageView" destination="EzR-B9-2aV" id="hJe-FM-G9c"/>
-                        <outlet property="dormNameLabel" destination="7BJ-si-c6X" id="Uoh-u9-3je"/>
+                        <outlet property="dormNameLabel" destination="tZB-k9-1JP" id="2GS-Ye-5yq"/>
                         <outlet property="tableView" destination="htk-S2-jH8" id="ayA-PK-MGB"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bqJ-db-tJN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-168" y="21"/>
+            <point key="canvasLocation" x="768.79999999999995" y="289.20539730134936"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="XND-yw-Q1s">
+            <objects>
+                <navigationController storyboardIdentifier="genericDormNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="98Y-jf-HM4" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" translucent="NO" id="tnR-K1-RF1">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" red="0.0" green="0.078431372549019607" blue="0.29411764705882354" alpha="1" colorSpace="calibratedRGB"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Wa5-Cf-dFI" kind="relationship" relationship="rootViewController" id="OHH-b1-gwW"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RT4-Ua-xSw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-86" y="265"/>
         </scene>
     </scenes>
     <resources>

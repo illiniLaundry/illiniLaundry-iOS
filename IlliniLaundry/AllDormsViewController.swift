@@ -88,7 +88,7 @@ class AllDormsViewController: UIViewController, UICollectionViewDelegate, UIColl
             assertionFailure("Failed to preform fetch operation, error: \(error)")
         }
         
-//        self.collectionView.reloadData()
+        self.collectionView.reloadData()
         
         self.perform(#selector(endRefresh), with: nil, afterDelay: 1)
     }
@@ -109,15 +109,30 @@ class AllDormsViewController: UIViewController, UICollectionViewDelegate, UIColl
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "dormCell", for: indexPath) as! DormCell
         cell.configure(dorm: fetchedResultsController.object(at: indexPath))
         cell.dormLabel.allowsDefaultTighteningForTruncation = true
-        let path = UIBezierPath(roundedRect:cell.dormLabel.layer.bounds,
-                                byRoundingCorners:[.bottomRight, .bottomLeft],
-                                cornerRadii: CGSize(width: 3, height:  3))
         
-        let maskLayer = CAShapeLayer()
-        maskLayer.path = path.cgPath
-        cell.dormLabel.layer.mask = maskLayer
+        
+        cell.contentView.layer.cornerRadius = 2.0
+        cell.contentView.layer.borderWidth = 1.0
+        cell.contentView.layer.borderColor = UIColor.clear.cgColor
+        cell.contentView.layer.masksToBounds = true
+        
+        
+        cell.layer.shadowColor = UIColor.lightGray.cgColor
+        cell.layer.shadowOffset = CGSize(width: 0, height: 2.0)
+        cell.layer.shadowRadius = 2.0
+        cell.layer.shadowOpacity = 1.0
+        cell.layer.masksToBounds = false
+        cell.layer.shadowPath = UIBezierPath(roundedRect: cell.contentView.layer.bounds, cornerRadius: cell.contentView.layer.cornerRadius).cgPath
+        
         cell.layoutIfNeeded()
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let dormView = UIStoryboard(name:"GenericDorm", bundle: nil).instantiateViewController(withIdentifier: "genericDormNavigationController") as! UINavigationController;
+            
+        GenericDormViewController.dormName = fetchedResultsController.object(at: indexPath).name
+        self.present(dormView, animated:true, completion:nil);
     }
     
     var blockOperations: [BlockOperation] = []

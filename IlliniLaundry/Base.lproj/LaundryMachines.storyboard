@@ -6,7 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -48,17 +47,17 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="app_logo" translatesAutoresizingMaskIntoConstraints="NO" id="XjP-F3-Uc2">
-                                <rect key="frame" x="10" y="20" width="24" height="24"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="app_logo" translatesAutoresizingMaskIntoConstraints="NO" id="quC-mf-UJP">
+                                <rect key="frame" x="10" y="17" width="32" height="32"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="XjP-F3-Uc2" secondAttribute="height" multiplier="1:1" id="FtH-YH-cDq"/>
-                                    <constraint firstAttribute="height" constant="24" id="ONa-0l-BYc"/>
+                                    <constraint firstAttribute="height" constant="32" id="HVm-OW-o3t"/>
+                                    <constraint firstAttribute="width" constant="32" id="UyG-pR-EKi"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="illiniLaundry" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KLY-fr-3hF">
-                                <rect key="frame" x="42" y="23" width="91" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="illiniLaundry" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HxZ-S4-AUJ">
+                                <rect key="frame" x="50" y="23" width="91" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -66,17 +65,18 @@
                         <constraints>
                             <constraint firstItem="ob6-ho-TxF" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="5RB-r1-rEl"/>
                             <constraint firstItem="xeS-eL-8ZT" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="32" id="A77-Ih-ybi"/>
-                            <constraint firstItem="XjP-F3-Uc2" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="KHY-dF-NIw"/>
-                            <constraint firstItem="KLY-fr-3hF" firstAttribute="leading" secondItem="XjP-F3-Uc2" secondAttribute="trailing" constant="8" id="NZb-7n-6Lj"/>
+                            <constraint firstItem="HxZ-S4-AUJ" firstAttribute="leading" secondItem="quC-mf-UJP" secondAttribute="trailing" constant="8" id="EKv-Rl-jab"/>
                             <constraint firstAttribute="trailing" secondItem="xeS-eL-8ZT" secondAttribute="trailing" id="R9G-U0-UFx"/>
+                            <constraint firstItem="quC-mf-UJP" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="10" id="RlU-q2-dgd"/>
+                            <constraint firstItem="quC-mf-UJP" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="17" id="SZO-sD-6bo"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="ob6-ho-TxF" secondAttribute="bottom" id="U5K-eY-yWD"/>
                             <constraint firstItem="xeS-eL-8ZT" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="cke-IB-0h3"/>
-                            <constraint firstItem="XjP-F3-Uc2" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="10" id="fIK-Im-HRC"/>
+                            <constraint firstItem="HxZ-S4-AUJ" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="23" id="gBm-pv-NM7"/>
                             <constraint firstItem="ob6-ho-TxF" firstAttribute="top" secondItem="xeS-eL-8ZT" secondAttribute="bottom" id="kUL-Vf-o8b"/>
-                            <constraint firstItem="KLY-fr-3hF" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="3" id="ul4-6N-tS5"/>
                             <constraint firstAttribute="trailing" secondItem="ob6-ho-TxF" secondAttribute="trailing" id="zzN-0H-ljH"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="8Bg-fc-LjG"/>
                     <connections>
                         <outlet property="buttonBarView" destination="xeS-eL-8ZT" id="iw9-VK-C2K"/>
                         <outlet property="containerView" destination="ob6-ho-TxF" id="a3Y-z7-reB"/>
@@ -84,7 +84,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="24.375" y="35.91549295774648"/>
+            <point key="canvasLocation" x="-82.5" y="36.971830985915496"/>
         </scene>
     </scenes>
     <resources>
