@@ -32,9 +32,15 @@ $ open IlliniLaundry.xcworkspace
 ## TODOs
 
 1. Add fetching for single dorms
-2. Add favorites and implement MyDormsViewController
-3. Fully implement GenericDormViewController once fetching single dorm is supported
-4. Comment and refactor code more thoroughly
+2. Optimize GenericDormViewController once fetching single dorm is supported
+3. Increase spacing for collectionview cells in AllDormsViewController
+4. Optimize shadow calculations for collectionview cells in AllDormsViewController
+5. Writeup git tutorial for people who want to contribute
+6. Change all fonts to reflect the android version of the app
+7. Decrese perceived elevation distance for collectionview cells in AllDormsViewController
+8. Update UI in MyDormsViewController
+9. Set Statusbar theme to light for LaundryMachineViewController
+10. Comment and refactor code more thoroughly
 
 ## Pages
 
