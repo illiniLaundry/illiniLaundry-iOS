@@ -23,8 +23,7 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
     var headerView: UIView!
     var hideStatusBar: Bool = false
     
-    
-    
+
     @IBOutlet weak var dormImageView: UIImageView!
     @IBOutlet weak var dormNameLabel: UILabel!
     
@@ -63,6 +62,9 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
         
         tableView.contentInset = UIEdgeInsetsMake(kTableHeaderHeight, 0, 0, 0);
         tableView.contentOffset = CGPoint(x: 0, y: -kTableHeaderHeight);
+        
+        var b = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.action, target: self, action:"addToFavorites")
+        self.navigationItem.rightBarButtonItem = b
         updateHeaderView();
         fetch()
     }
@@ -77,6 +79,12 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
     }
     
     
+    func addToFavorites() {
+        var favoritesData = UserDefaults.standard.stringArray(forKey: "favorites") ?? [String]()
+        favoritesData.append(GenericDormViewController.dormName)
+        UserDefaults.standard.set(favoritesData, forKey: "favorites")
+        print ("added to favorites")
+    }
     
     
     override func didReceiveMemoryWarning() {

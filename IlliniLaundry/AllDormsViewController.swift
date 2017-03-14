@@ -88,7 +88,7 @@ class AllDormsViewController: UIViewController, UICollectionViewDelegate, UIColl
             assertionFailure("Failed to preform fetch operation, error: \(error)")
         }
         
-        self.collectionView.reloadData()
+//        self.collectionView.reloadData()
         
         self.perform(#selector(endRefresh), with: nil, afterDelay: 1)
     }

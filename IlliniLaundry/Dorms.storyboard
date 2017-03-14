@@ -99,30 +99,43 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MY DORMS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3p0-Yc-xP4">
-                                <rect key="frame" x="100" y="120" width="90" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9al-jc-dUp">
-                                <rect key="frame" x="100" y="151" width="112" height="30"/>
-                                <state key="normal" title="MyDormsButton"/>
-                                <connections>
-                                    <action selector="DormView:" destination="ISK-Qy-btr" eventType="touchUpInside" id="4zx-tl-ERx"/>
-                                </connections>
-                            </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="7Iy-3y-8aI">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="genericFavoritesDormCell" id="c00-ns-r25" customClass="GenericFavoritesDormCell" customModule="IlliniLaundry" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="c00-ns-r25" id="kBC-1T-PsT">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fIW-aT-6yf">
+                                                    <rect key="frame" x="96" y="11" width="42" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="dormNameLabel" destination="fIW-aT-6yf" id="ekW-Bx-rUQ"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="9al-jc-dUp" firstAttribute="leading" secondItem="K0J-Ph-6rM" secondAttribute="leading" constant="100" id="D8K-FX-hfU"/>
-                            <constraint firstItem="3p0-Yc-xP4" firstAttribute="top" secondItem="rjo-OY-v37" secondAttribute="bottom" constant="100" id="rkA-Zh-gWO"/>
-                            <constraint firstItem="9al-jc-dUp" firstAttribute="top" secondItem="3p0-Yc-xP4" secondAttribute="bottom" constant="10" id="tJz-jQ-E5D"/>
-                            <constraint firstItem="3p0-Yc-xP4" firstAttribute="leading" secondItem="K0J-Ph-6rM" secondAttribute="leading" constant="100" id="tW1-JI-VWU"/>
+                            <constraint firstAttribute="trailing" secondItem="7Iy-3y-8aI" secondAttribute="trailing" id="7Ki-ml-aan"/>
+                            <constraint firstItem="7Iy-3y-8aI" firstAttribute="top" secondItem="rjo-OY-v37" secondAttribute="bottom" id="Vxv-NW-ejm"/>
+                            <constraint firstItem="nGf-fH-460" firstAttribute="top" secondItem="7Iy-3y-8aI" secondAttribute="bottom" id="czR-yQ-72d"/>
+                            <constraint firstItem="7Iy-3y-8aI" firstAttribute="leading" secondItem="K0J-Ph-6rM" secondAttribute="leading" id="rdz-gq-OKr"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="MyDormsButton" destination="9al-jc-dUp" id="lGn-he-NxF"/>
+                        <outlet property="tableView" destination="7Iy-3y-8aI" id="dnV-xy-vRu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tiZ-de-j5E" userLabel="First Responder" sceneMemberID="firstResponder"/>

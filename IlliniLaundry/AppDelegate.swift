@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 //        mTimer = Timer.scheduledTimer(timeInterval: 10, target:self, selector: #selector(updateAllDorms), userInfo: nil, repeats: true)
-        
+        self.listenForMocSavedNotification()
         return true
     }
     
