@@ -25,11 +25,7 @@ class MyDormsViewController: UIViewController, UITableViewDelegate, UITableViewD
         refreshControl.tintColor = UIColor.gray;
         refreshControl.addTarget(self, action: #selector(self.refresh), for: UIControlEvents.valueChanged)
         self.tableView.insertSubview(refreshControl, at: 0)
-        
-        let favoritesData = UserDefaults.standard.string(forKey: "favorites")
-        if favoritesData != nil {
-            favorites = [favoritesData!]
-        }
+        tableView.reloadData()
     }
     
     override func didReceiveMemoryWarning() {
@@ -46,7 +42,8 @@ class MyDormsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func refresh() {
-        let favoritesData = UserDefaults.standard.stringArray(forKey: "favorites")
+        var favoritesData = UserDefaults.standard.stringArray(forKey: "favorites")
+        favoritesData = favoritesData?.sorted()
         if favoritesData != nil {
             favorites = favoritesData!
             print (favorites)

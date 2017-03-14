@@ -63,8 +63,14 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
         tableView.contentInset = UIEdgeInsetsMake(kTableHeaderHeight, 0, 0, 0);
         tableView.contentOffset = CGPoint(x: 0, y: -kTableHeaderHeight);
         
-        var b = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.action, target: self, action:"addToFavorites")
-        self.navigationItem.rightBarButtonItem = b
+        let favoritesData = UserDefaults.standard.stringArray(forKey: "favorites") ?? [String]()
+        if favoritesData.contains(GenericDormViewController.dormName) {
+            let b = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.trash, target: self, action:#selector(GenericDormViewController.removeFromFavorites))
+            self.navigationItem.rightBarButtonItem = b
+        } else {
+            let b = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.add, target: self, action:#selector(GenericDormViewController.addToFavorites))
+            self.navigationItem.rightBarButtonItem = b
+        }
         updateHeaderView();
         fetch()
     }
@@ -81,9 +87,27 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
     
     func addToFavorites() {
         var favoritesData = UserDefaults.standard.stringArray(forKey: "favorites") ?? [String]()
-        favoritesData.append(GenericDormViewController.dormName)
-        UserDefaults.standard.set(favoritesData, forKey: "favorites")
-        print ("added to favorites")
+        if(!favoritesData.contains(GenericDormViewController.dormName)) {
+            favoritesData.append(GenericDormViewController.dormName)
+            UserDefaults.standard.set(favoritesData, forKey: "favorites")
+            print ("added to favorites")
+        }
+        let b = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.trash, target: self, action:#selector(GenericDormViewController.removeFromFavorites))
+        self.navigationItem.rightBarButtonItem = b
+ 
+    }
+    
+    func removeFromFavorites() {
+        var favoritesData = UserDefaults.standard.stringArray(forKey: "favorites") ?? [String]()
+        if let index = favoritesData.index(of: GenericDormViewController.dormName) {
+            favoritesData.remove(at: index)
+            
+            UserDefaults.standard.set(favoritesData, forKey: "favorites")
+            
+            print ("removed from favorites")
+        }
+        let b = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.add, target: self, action:#selector(GenericDormViewController.addToFavorites))
+        self.navigationItem.rightBarButtonItem = b
     }
     
     
@@ -153,6 +177,7 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
         tableView.deselectRow(at: indexPath, animated: true)
 //        performSegue(withIdentifier: "showEventDetails", sender: indexPath)
     }
+
     
 //    lazy var dormsPrivateMoc: NSManagedObjectContext = {
 //        var dormsPrivateMoc = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
