@@ -109,6 +109,13 @@ class AllDormsViewController: UIViewController, UICollectionViewDelegate, UIColl
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "dormCell", for: indexPath) as! DormCell
         cell.configure(dorm: fetchedResultsController.object(at: indexPath))
         cell.dormLabel.allowsDefaultTighteningForTruncation = true
+        let path = UIBezierPath(roundedRect:cell.dormLabel.layer.bounds,
+                                byRoundingCorners:[.bottomRight, .bottomLeft],
+                                cornerRadii: CGSize(width: 3, height:  3))
+        
+        let maskLayer = CAShapeLayer()
+        maskLayer.path = path.cgPath
+        cell.dormLabel.layer.mask = maskLayer
         cell.layoutIfNeeded()
         return cell
     }

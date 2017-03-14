@@ -15,22 +15,25 @@ class LaundryMachineViewController: ButtonBarPagerTabStripViewController {
     let selectedBarColor = hexToUIColor(IllinoisOrange)
 
     override func viewDidLoad() {
+
         settings.style.buttonBarBackgroundColor = .white
-        settings.style.buttonBarItemBackgroundColor = .white
+        settings.style.buttonBarItemBackgroundColor = hexToUIColor(IllinoisBlue)
         settings.style.selectedBarBackgroundColor = selectedBarColor
         settings.style.buttonBarItemFont = .boldSystemFont(ofSize: 14)
         settings.style.selectedBarHeight = 2.0
         settings.style.buttonBarMinimumLineSpacing = 0
-        settings.style.buttonBarItemTitleColor = .black
+        settings.style.buttonBarItemTitleColor = .white
         settings.style.buttonBarItemsShouldFillAvailiableWidth = true
         settings.style.buttonBarLeftContentInset = 0
         settings.style.buttonBarRightContentInset = 0
         changeCurrentIndexProgressive = { [weak self] (oldCell: ButtonBarViewCell?, newCell: ButtonBarViewCell?, progressPercentage: CGFloat, changeCurrentIndex: Bool, animated: Bool) -> Void in
             guard changeCurrentIndex == true else { return }
-            oldCell?.label.textColor = .black
+            oldCell?.label.textColor = .white
             newCell?.label.textColor = self?.selectedBarColor
         }
         super.viewDidLoad()
+        
+        self.view.backgroundColor = hexToUIColor(IllinoisBlue)
     }
     
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
