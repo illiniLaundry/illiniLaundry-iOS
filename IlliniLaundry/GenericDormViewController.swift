@@ -10,6 +10,7 @@ import UIKit
 import CoreData
 import SwiftyJSON
 import Alamofire
+import EventKit
 
 class GenericDormViewController: UITableViewController, NSFetchedResultsControllerDelegate{
     var mTimer = Timer()
@@ -22,6 +23,9 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
     var previousScrollOffset: CGFloat = 0
     var headerView: UIView!
     var hideStatusBar: Bool = false
+    
+
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
 
     @IBOutlet weak var dormImageView: UIImageView!
@@ -166,6 +170,50 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
 
     }
     
+    func setReminder(timeRemaining: String) {
+        
+        if appDelegate.eventStore == nil {
+            appDelegate.eventStore = EKEventStore()
+            
+            appDelegate.eventStore?.requestAccess(
+                to: EKEntityType.reminder, completion: {(granted, error) in
+                    if !granted {
+                        print("Access to store not granted")
+                        print(error?.localizedDescription ?? "")
+                    } else {
+                        print("Access granted")
+                    }
+            })
+        }
+        
+        if (appDelegate.eventStore != nil) {
+            self.createReminder(timeRemaining: timeRemaining)
+        }
+    }
+    
+    func createReminder(timeRemaining: String) {
+        
+        let minutes = Double(String(timeRemaining.characters.filter { "0"..."9" ~= $0 }))
+        
+        let reminder = EKReminder(eventStore: appDelegate.eventStore!)
+        
+        reminder.title = "IlliniLaundry"
+        reminder.calendar =
+            (appDelegate.eventStore?.defaultCalendarForNewReminders())!
+        var date = Date()
+        date = date.addingTimeInterval(minutes! * 60.0)
+        let alarm = EKAlarm(absoluteDate: date)
+        
+        reminder.addAlarm(alarm)
+        
+        do {
+            try appDelegate.eventStore?.save(reminder,
+                                             commit: true)
+        } catch let error {
+            print("Reminder failed with error \(error.localizedDescription)")
+        }
+    }
+    
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return fetchedResultsController.sections?.count ?? 0
@@ -177,7 +225,7 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-//        performSegue(withIdentifier: "showEventDetails", sender: indexPath)
+        setReminder(timeRemaining: fetchedResultsController.object(at: indexPath).timeRemaining)
     }
 
     
