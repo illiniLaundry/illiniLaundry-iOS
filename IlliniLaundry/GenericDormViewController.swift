@@ -239,7 +239,7 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
         let cell = tableView.dequeueReusableCell(withIdentifier: "LaundryMachineCell", for: indexPath)
         
         if let cell = cell as? LaundryMachineCell {
-            cell.timeRemainingLabel.text = machine.timeRemaining
+            cell.configure(dorm: machine)
         }
         cell.layoutIfNeeded()
         return cell

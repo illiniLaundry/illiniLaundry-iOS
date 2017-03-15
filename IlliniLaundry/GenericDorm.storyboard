@@ -12,8 +12,8 @@
         <!--Generic Dorm View Controller-->
         <scene sceneID="VoP-9f-ihj">
             <objects>
-                <tableViewController storyboardIdentifier="GenericDormViewController" id="Wa5-Cf-dFI" customClass="GenericDormViewController" customModule="IlliniLaundry" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="htk-S2-jH8">
+                <tableViewController storyboardIdentifier="GenericDormViewController" automaticallyAdjustsScrollViewInsets="NO" id="Wa5-Cf-dFI" customClass="GenericDormViewController" customModule="IlliniLaundry" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="69" sectionHeaderHeight="28" sectionFooterHeight="28" id="htk-S2-jH8">
                         <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -34,27 +34,48 @@
                             </constraints>
                         </view>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LaundryMachineCell" id="xL8-El-VSt" customClass="LaundryMachineCell" customModule="IlliniLaundry" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="328" width="375" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LaundryMachineCell" rowHeight="69" id="xL8-El-VSt" customClass="LaundryMachineCell" customModule="IlliniLaundry" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="328" width="375" height="69"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xL8-El-VSt" id="K1n-Kj-Vq4">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="68"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="time remaining" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WX0-TY-3DF">
-                                            <rect key="frame" x="5" y="5" width="113" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3zn-Uo-UMU">
+                                            <rect key="frame" x="0.0" y="0.0" width="94" height="68"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aOx-VA-j4E">
+                                            <rect key="frame" x="94" y="0.0" width="93.5" height="68"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ofZ-CE-A1o">
+                                            <rect key="frame" x="187.5" y="0.0" width="94" height="68"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RbL-XH-yhn">
+                                            <rect key="frame" x="281.5" y="0.0" width="93.5" height="68"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
-                                    <constraints>
-                                        <constraint firstItem="WX0-TY-3DF" firstAttribute="top" secondItem="K1n-Kj-Vq4" secondAttribute="top" constant="5" id="Zss-He-CtW"/>
-                                        <constraint firstItem="WX0-TY-3DF" firstAttribute="leading" secondItem="K1n-Kj-Vq4" secondAttribute="leading" constant="5" id="r81-Tf-9Rx"/>
-                                    </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="timeRemainingLabel" destination="WX0-TY-3DF" id="lDu-A7-RWG"/>
+                                    <outlet property="numberLabel" destination="3zn-Uo-UMU" id="Hbo-36-Gaz"/>
+                                    <outlet property="statusLabel" destination="ofZ-CE-A1o" id="GIs-eZ-Jza"/>
+                                    <outlet property="timeRemainingLabel" destination="RbL-XH-yhn" id="rd4-D8-SUk"/>
+                                    <outlet property="typeLabel" destination="aOx-VA-j4E" id="G2L-6v-GKB"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

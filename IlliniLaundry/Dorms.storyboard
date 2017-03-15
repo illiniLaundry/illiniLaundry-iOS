@@ -22,9 +22,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="XZh-ID-9kW">
-                                <rect key="frame" x="10" y="20" width="365" height="647"/>
+                                <rect key="frame" x="20" y="20" width="355" height="647"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="xSW-VF-zlU">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="xSW-VF-zlU">
                                     <size key="itemSize" width="120" height="156"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -75,7 +75,7 @@
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="XZh-ID-9kW" secondAttribute="trailing" id="MXQ-QF-dhZ"/>
                             <constraint firstItem="i1i-m3-a2Y" firstAttribute="top" secondItem="XZh-ID-9kW" secondAttribute="bottom" id="Q2A-10-HRd"/>
-                            <constraint firstItem="XZh-ID-9kW" firstAttribute="leading" secondItem="rmg-Yb-9by" secondAttribute="leading" constant="10" id="o9p-Vc-i4W"/>
+                            <constraint firstItem="XZh-ID-9kW" firstAttribute="leading" secondItem="rmg-Yb-9by" secondAttribute="leading" constant="20" id="o9p-Vc-i4W"/>
                             <constraint firstItem="XZh-ID-9kW" firstAttribute="top" secondItem="DLM-VI-qRp" secondAttribute="bottom" id="uqe-E4-RmL"/>
                         </constraints>
                     </view>
