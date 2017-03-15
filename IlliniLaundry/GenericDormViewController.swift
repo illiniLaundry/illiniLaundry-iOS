@@ -71,6 +71,8 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
             let b = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.add, target: self, action:#selector(GenericDormViewController.addToFavorites))
             self.navigationItem.rightBarButtonItem = b
         }
+        tableView.separatorColor = UIColor.black
+        tableView.separatorInset = UIEdgeInsets.zero
         updateHeaderView();
         fetch()
     }
@@ -294,4 +296,3 @@ class GenericDormViewController: UITableViewController, NSFetchedResultsControll
 //        }
     }
 }
-

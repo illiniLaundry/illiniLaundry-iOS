@@ -25,11 +25,21 @@ class LaundryMachineCell: UITableViewCell {
         self.typeLabel.text = dorm.description_
         self.statusLabel.text = dorm.status
         self.timeRemainingLabel.text = dorm.timeRemaining
+        
         if(dorm.status != "Available") {
-            self.backgroundColor = UIColor.red
+            let background = UIView(frame: self.frame)
+            background.backgroundColor = hexToUIColor(softRed)
+            self.backgroundView = background
         } else {
-            self.backgroundColor = UIColor.green
+            let background = UIView(frame: self.frame)
+            background.backgroundColor = hexToUIColor(softGreen)
+            self.backgroundView = background
         }
+        
+        self.numberLabel.textColor = hexToUIColor(textGray)
+        self.typeLabel.textColor = hexToUIColor(textGray)
+        self.statusLabel.textColor = hexToUIColor(textGray)
+        self.timeRemainingLabel.textColor = hexToUIColor(textGray)
         
     }
 }
