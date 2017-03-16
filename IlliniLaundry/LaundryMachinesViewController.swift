@@ -25,7 +25,7 @@ class LaundryMachineViewController: ButtonBarPagerTabStripViewController {
         settings.style.buttonBarItemsShouldFillAvailiableWidth = true
         settings.style.buttonBarLeftContentInset = 0
         settings.style.buttonBarRightContentInset = 0
-        settings.style.buttonBarItemFont = UIFont(name: "Avenir", size: 14)!
+        settings.style.buttonBarItemFont = UIFont(name: "Avenir", size: 18)!
         changeCurrentIndexProgressive = { [weak self] (oldCell: ButtonBarViewCell?, newCell: ButtonBarViewCell?, progressPercentage: CGFloat, changeCurrentIndex: Bool, animated: Bool) -> Void in
             guard changeCurrentIndex == true else { return }
             oldCell?.label.textColor = .white
