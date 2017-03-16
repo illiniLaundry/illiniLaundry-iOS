@@ -15,8 +15,10 @@ class AllDormsViewController: UIViewController, UICollectionViewDelegate, UIColl
 
     @IBOutlet weak var collectionView: UICollectionView!
     
-    fileprivate let sectionInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 10.0, right: 10.0)
+    fileprivate let sectionInsets = UIEdgeInsets(top: 10.0, left: 0.0, bottom: 0.0, right: 10.0)
     fileprivate let itemsPerRow: CGFloat = 3
+    
+    fileprivate let magicNumber: CGFloat = 3
     
     
     let refreshControl = UIRefreshControl()
@@ -26,18 +28,22 @@ class AllDormsViewController: UIViewController, UICollectionViewDelegate, UIColl
         collectionView.delegate = self
         collectionView.dataSource = self
         self.automaticallyAdjustsScrollViewInsets = false
-        let w = (collectionView?.contentSize.width)!
-        let paddingSpace:CGFloat = sectionInsets.right
-        let availableWidth = w - (paddingSpace * itemsPerRow)
-        
-        let widthPerItem = availableWidth / itemsPerRow
+//        let w = (collectionView?.contentSize.width)!
+//        let paddingSpace:CGFloat = sectionInsets.right
+//        let availableWidth = w - (paddingSpace * itemsPerRow)
+//        
+//        let widthPerItem = availableWidth / itemsPerRow
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        
         layout.sectionInset = sectionInsets
         
+        let totalWidth = layout.sectionInset.right * (itemsPerRow + magicNumber)
+        let widthPerItem = (UIScreen.main.bounds.width - 10  - totalWidth) / CGFloat(itemsPerRow)
         layout.itemSize = CGSize(width:widthPerItem,height:widthPerItem * 1.2)
         
-        layout.minimumInteritemSpacing = 0
-        layout.minimumLineSpacing = 10
+        
+//        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 15
         
         collectionView!.collectionViewLayout = layout
         collectionView.contentInset = sectionInsets
@@ -49,6 +55,7 @@ class AllDormsViewController: UIViewController, UICollectionViewDelegate, UIColl
         fetch()
 
     }
+    
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
         return IndicatorInfo(title: "All Dorms")
     }

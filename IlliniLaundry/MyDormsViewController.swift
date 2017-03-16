@@ -43,7 +43,6 @@ class MyDormsViewController: UIViewController, UITableViewDelegate, UITableViewD
         favoritesData = favoritesData?.sorted()
         if favoritesData != nil {
             favorites = favoritesData!
-            print (favorites)
         }
         print ("called refresh")
         tableView.reloadData()
@@ -55,7 +54,6 @@ class MyDormsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(favorites.count)
         return 1
     }
     
