@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ViewController" customModule="IlliniLaundry" customModuleProvider="target"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="F8U-sE-SaU" customClass="LaundryMachineCell" customModule="IlliniLaundry" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="400" height="99"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Eqq-Ke-Zx9">
+                    <rect key="frame" x="50" y="0.0" width="117" height="99"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BNS-kN-XhG">
+                    <rect key="frame" x="284" y="0.0" width="116" height="99"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pFM-3E-rK5">
+                    <rect key="frame" x="20" y="0.0" width="30" height="99"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="30" id="ngS-Zg-TKO"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yos-Bb-x3B">
+                    <rect key="frame" x="167" y="0.0" width="117" height="99"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="Yos-Bb-x3B" secondAttribute="bottom" id="0NX-fb-NPX"/>
+                <constraint firstAttribute="bottom" secondItem="pFM-3E-rK5" secondAttribute="bottom" id="AlY-jG-icR"/>
+                <constraint firstItem="BNS-kN-XhG" firstAttribute="leading" secondItem="Yos-Bb-x3B" secondAttribute="trailing" id="CHB-H5-6Pm"/>
+                <constraint firstItem="BNS-kN-XhG" firstAttribute="width" secondItem="Eqq-Ke-Zx9" secondAttribute="width" id="DaY-BI-qf7"/>
+                <constraint firstItem="pFM-3E-rK5" firstAttribute="top" secondItem="F8U-sE-SaU" secondAttribute="top" id="HJV-ql-Qap"/>
+                <constraint firstItem="Eqq-Ke-Zx9" firstAttribute="top" secondItem="F8U-sE-SaU" secondAttribute="top" id="KSW-FX-UC6"/>
+                <constraint firstAttribute="bottom" secondItem="Eqq-Ke-Zx9" secondAttribute="bottom" id="S5N-ry-W1q"/>
+                <constraint firstItem="Yos-Bb-x3B" firstAttribute="width" secondItem="Eqq-Ke-Zx9" secondAttribute="width" id="TKR-3g-GXX"/>
+                <constraint firstItem="Eqq-Ke-Zx9" firstAttribute="leading" secondItem="pFM-3E-rK5" secondAttribute="trailing" id="bAq-4T-BXp"/>
+                <constraint firstItem="pFM-3E-rK5" firstAttribute="leading" secondItem="F8U-sE-SaU" secondAttribute="leading" constant="20" id="eNW-KW-VQX"/>
+                <constraint firstItem="Yos-Bb-x3B" firstAttribute="leading" secondItem="Eqq-Ke-Zx9" secondAttribute="trailing" id="esL-3o-nUf"/>
+                <constraint firstItem="BNS-kN-XhG" firstAttribute="top" secondItem="F8U-sE-SaU" secondAttribute="top" id="gWX-JY-yhF"/>
+                <constraint firstAttribute="trailing" secondItem="BNS-kN-XhG" secondAttribute="trailing" id="lez-Te-q6K"/>
+                <constraint firstItem="Yos-Bb-x3B" firstAttribute="top" secondItem="F8U-sE-SaU" secondAttribute="top" id="oS6-hl-0iT"/>
+                <constraint firstAttribute="bottom" secondItem="BNS-kN-XhG" secondAttribute="bottom" id="vAX-Qn-AuN"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="numberLabel" destination="pFM-3E-rK5" id="7B0-XY-jnv"/>
+                <outlet property="statusLabel" destination="Yos-Bb-x3B" id="OEd-3d-ZEU"/>
+                <outlet property="timeRemainingLabel" destination="BNS-kN-XhG" id="DcS-Xc-D0K"/>
+                <outlet property="typeLabel" destination="Eqq-Ke-Zx9" id="8UP-u3-ERY"/>
+            </connections>
+            <point key="canvasLocation" x="46" y="-6.5"/>
+        </view>
+    </objects>
+</document>

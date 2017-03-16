@@ -37,10 +37,6 @@ class MyDormsViewController: UIViewController, UITableViewDelegate, UITableViewD
         return IndicatorInfo(title: "My Dorms")
     }
     
-    @IBAction func DormView(_ sender: Any) {
-        let dormView = UIStoryboard(name:"GenericDorm", bundle: nil).instantiateViewController(withIdentifier: "genericDormNavigationController");
-        self.present(dormView, animated:true, completion:nil);
-    }
     
     func refresh() {
         var favoritesData = UserDefaults.standard.stringArray(forKey: "favorites")
@@ -95,15 +91,15 @@ class MyDormsViewController: UIViewController, UITableViewDelegate, UITableViewD
         cell.layer.shadowPath = UIBezierPath(roundedRect: cell.contentView.layer.bounds, cornerRadius: cell.contentView.layer.cornerRadius).cgPath
         
         cell.layoutIfNeeded()
+        
         return cell
     }
     
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let dormView = UIStoryboard(name:"GenericDorm", bundle: nil).instantiateViewController(withIdentifier: "genericDormNavigationController") as! UINavigationController;
-        
-        GenericDormViewController.dormName = favorites[indexPath.section]
+        let dormView = UIStoryboard(name:"GenericDorm", bundle: nil).instantiateViewController(withIdentifier: "genericDormViewController") as! GenericDormViewController;
+         GenericDormViewController.dormNameStatic = favorites[indexPath.section]
         self.present(dormView, animated:true, completion:nil);
     }
 }

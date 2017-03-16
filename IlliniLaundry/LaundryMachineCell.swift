@@ -29,11 +29,11 @@ class LaundryMachineCell: UITableViewCell {
         if(dorm.status != "Available") {
             let background = UIView(frame: self.frame)
             background.backgroundColor = hexToUIColor(softRed)
-            self.backgroundView = background
+             self.backgroundView = background
         } else {
             let background = UIView(frame: self.frame)
             background.backgroundColor = hexToUIColor(softGreen)
-            self.backgroundView = background
+             self.backgroundView = background
         }
         
         self.numberLabel.textColor = hexToUIColor(textGray)

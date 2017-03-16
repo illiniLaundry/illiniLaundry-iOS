@@ -135,9 +135,11 @@ class AllDormsViewController: UIViewController, UICollectionViewDelegate, UIColl
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let dormView = UIStoryboard(name:"GenericDorm", bundle: nil).instantiateViewController(withIdentifier: "genericDormNavigationController") as! UINavigationController;
-            
-        GenericDormViewController.dormName = fetchedResultsController.object(at: indexPath).name
+       // let dormView = UIStoryboard(name:"GenericDorm", bundle: nil).instantiateViewController(withIdentifier: "genericDormNavigationController") as! UINavigationController;
+        
+        //GenericDormViewController.dormNameStatic = fetchedResultsController.object(at: indexPath).name
+        let dormView = UIStoryboard(name:"GenericDorm", bundle: nil).instantiateViewController(withIdentifier: "genericDormViewController") as! GenericDormViewController;
+        GenericDormViewController.dormNameStatic = fetchedResultsController.object(at: indexPath).name
         self.present(dormView, animated:true, completion:nil);
     }
     

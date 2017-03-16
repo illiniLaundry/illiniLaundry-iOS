@@ -12,6 +12,7 @@ target 'IlliniLaundry' do
   pod 'Sync', '~> 2'
   pod 'SYNCPropertyMapper', '~>5'
   pod 'Alamofire', '~> 4.3'
+  pod 'LFTwitterProfile', :git=> 'https://github.com/minpark815/iOS-TwitterProfile.git', :commit=> '7607339abcff40b5fb02f5cfe1150bf7d0371ca8'
 
   # Pods for IlliniLaundry
 
