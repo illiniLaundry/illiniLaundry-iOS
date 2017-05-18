@@ -56,6 +56,13 @@ class APIManager {
         performRequest(method: .get, parameters: nil, success: success, failure: failure)
     }
     
+    func getSingleDormStatusSuccess(json: JSON) {
+        CoreDataHelpers.updateSingleDorm(json: json) { () -> () in
+        }
+    }
+    
+    // MARK: add supoort
+    
     // make a function called getSingleDormStaus that looks //DONE
     // just like getAllStatus
     
