@@ -1,6 +1,7 @@
 # IlliniLaundry - iOS version
-Tired of checking the laundryalert website? Try out IlliniLaundry!
+![](https://img.shields.io/badge/maintained%3F-no!-red.svg?style=flat)
 
+Tired of checking the laundryalert website? Try out IlliniLaundry!
 
 Available on the Apple appstore soon.
 ## Requirements
