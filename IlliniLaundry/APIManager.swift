@@ -15,7 +15,8 @@ class APIManager {
     
     let operationQueue = OperationQueue()
     
-    private let LAUNDRY_URL = "http://23.23.147.128/homes/mydata/urba7723"
+    private let LAUNDRY_URL = "http://api.laundryview.com/room/?api_key=" + API_KEY
+    private let DORM_IDS = ["589877048", "589877054", "589877017", "589877019","589877004", "589877022", "589877043", "589877003", "589877021", "589877044", "589877027", "589877026", "589877032", "589877030", "589877031", "589877038", "589877057", "589877037", "589877036", "589877040", "589877023", "589877046", "589877024", "589877008", "589877009", "589877052", "589877051", "589877015","589877002", "589877058", "589877061", "589877028"];
     
     private init() { }
     
@@ -57,7 +58,7 @@ class APIManager {
     }
     
     func getSingleDormStatusSuccess(json: JSON) {
-        CoreDataHelpers.updateSingleDorm(json: json) { () -> () in
+        CoreDataHelpers.updateSingleDorm(dormName: <#String#>, json: json) { () -> () in
         }
     }
     

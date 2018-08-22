@@ -2,8 +2,9 @@
 //  DormMachines+CoreDataProperties.swift
 //  IlliniLaundry
 //
-//  Created by Minhyuk Park on 24/02/2017.
-//  Copyright © 2017 Minhyuk Park. All rights reserved.
+//  Created by Minhyuk Park on 22/08/2018.
+//  Copyright © 2018 Minhyuk Park. All rights reserved.
+//
 //
 
 import Foundation
@@ -13,17 +14,18 @@ import CoreData
 extension DormMachines {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<DormMachines> {
-        return NSFetchRequest<DormMachines>(entityName: "DormMachines");
+        return NSFetchRequest<DormMachines>(entityName: "DormMachines")
     }
 
-    @NSManaged public var description_: String
     @NSManaged public var label: Int16
-    @NSManaged public var port: Int16
-    @NSManaged public var startTime: Date
+    @NSManaged public var out_of_service: Int16
     @NSManaged public var status: String
-    @NSManaged public var timeRemaining: String
-    @NSManaged public var uniqueID: String
-    @NSManaged public var dormName: String
-    @NSManaged public var dormStatus: DormStatus
+    @NSManaged public var appliance_type: String
+    @NSManaged public var lrm_status: String
+    @NSManaged public var appliance_desc_key: Int32
+    @NSManaged public var avg_cycle_time: Int32
+    @NSManaged public var time_remaining: String
+    @NSManaged public var unique_id: String
+    @NSManaged public var dorm_status: DormStatus
 
 }

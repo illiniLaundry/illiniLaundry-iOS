@@ -22,10 +22,6 @@
 		392E5EB41E4863D0006E6C7F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392E5EB31E4863D0006E6C7F /* Constants.swift */; };
 		39531F811E7A552D00274BBC /* LaundryMachineCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39531F7F1E7A552D00274BBC /* LaundryMachineCell.xib */; };
 		39666E511E61437700A507DF /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39666E501E61437700A507DF /* APIManager.swift */; };
-		39666E561E61487500A507DF /* DormMachines+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39666E521E61487500A507DF /* DormMachines+CoreDataClass.swift */; };
-		39666E571E61487500A507DF /* DormMachines+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39666E531E61487500A507DF /* DormMachines+CoreDataProperties.swift */; };
-		39666E581E61487500A507DF /* DormStatus+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39666E541E61487500A507DF /* DormStatus+CoreDataClass.swift */; };
-		39666E591E61487500A507DF /* DormStatus+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39666E551E61487500A507DF /* DormStatus+CoreDataProperties.swift */; };
 		399C9A0B1E79F51B00C4153A /* GenericDormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 399C9A0A1E79F51B00C4153A /* GenericDormViewController.swift */; };
 		39A413691E77B09A0013DB7B /* GenericFavoritesDormCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A413681E77B09A0013DB7B /* GenericFavoritesDormCell.swift */; };
 		39AA0AE31E66A89A00E548D6 /* DormCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39AA0AE21E66A89A00E548D6 /* DormCell.swift */; };
@@ -33,6 +29,10 @@
 		39C073441E48DE1100075ADE /* LaundryMachineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C073431E48DE1100075ADE /* LaundryMachineCell.swift */; };
 		39C0734B1E49650D00075ADE /* Dorm.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 39C073491E49650D00075ADE /* Dorm.xcdatamodeld */; };
 		39C0734D1E49671000075ADE /* CoreDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C0734C1E49671000075ADE /* CoreDataHelpers.swift */; };
+		39F3FA38212DF86B000A1962 /* DormStatus+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F3FA36212DF86B000A1962 /* DormStatus+CoreDataClass.swift */; };
+		39F3FA39212DF86B000A1962 /* DormStatus+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F3FA37212DF86B000A1962 /* DormStatus+CoreDataProperties.swift */; };
+		39F3FA3C212DF87C000A1962 /* DormMachines+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F3FA3A212DF87C000A1962 /* DormMachines+CoreDataClass.swift */; };
+		39F3FA3D212DF87C000A1962 /* DormMachines+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F3FA3B212DF87C000A1962 /* DormMachines+CoreDataProperties.swift */; };
 		502E4CCD9F67EF66A73D0D85 /* Pods_IlliniLaundry.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 749630EBD3DC1F592BDA5107 /* Pods_IlliniLaundry.framework */; };
 		D4A21CCF7FA8A860C294829D /* Pods_IlliniLaundryTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A5E07C52F5C0BAD7F2FE824 /* Pods_IlliniLaundryTests.framework */; };
 /* End PBXBuildFile section */
@@ -76,10 +76,6 @@
 		392E5EB31E4863D0006E6C7F /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		39531F7F1E7A552D00274BBC /* LaundryMachineCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaundryMachineCell.xib; sourceTree = "<group>"; };
 		39666E501E61437700A507DF /* APIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
-		39666E521E61487500A507DF /* DormMachines+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DormMachines+CoreDataClass.swift"; sourceTree = "<group>"; };
-		39666E531E61487500A507DF /* DormMachines+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DormMachines+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		39666E541E61487500A507DF /* DormStatus+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DormStatus+CoreDataClass.swift"; sourceTree = "<group>"; };
-		39666E551E61487500A507DF /* DormStatus+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DormStatus+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		399C9A0A1E79F51B00C4153A /* GenericDormViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericDormViewController.swift; sourceTree = "<group>"; };
 		39A413681E77B09A0013DB7B /* GenericFavoritesDormCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericFavoritesDormCell.swift; sourceTree = "<group>"; };
 		39AA0AE21E66A89A00E548D6 /* DormCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DormCell.swift; sourceTree = "<group>"; };
@@ -87,6 +83,10 @@
 		39C073431E48DE1100075ADE /* LaundryMachineCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaundryMachineCell.swift; sourceTree = "<group>"; };
 		39C0734A1E49650D00075ADE /* Dorm.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Dorm.xcdatamodel; sourceTree = "<group>"; };
 		39C0734C1E49671000075ADE /* CoreDataHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataHelpers.swift; sourceTree = "<group>"; };
+		39F3FA36212DF86B000A1962 /* DormStatus+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DormStatus+CoreDataClass.swift"; sourceTree = "<group>"; };
+		39F3FA37212DF86B000A1962 /* DormStatus+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DormStatus+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		39F3FA3A212DF87C000A1962 /* DormMachines+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DormMachines+CoreDataClass.swift"; sourceTree = "<group>"; };
+		39F3FA3B212DF87C000A1962 /* DormMachines+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DormMachines+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		4E775B4A338E329679B6C284 /* Pods-IlliniLaundry.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IlliniLaundry.release.xcconfig"; path = "Pods/Target Support Files/Pods-IlliniLaundry/Pods-IlliniLaundry.release.xcconfig"; sourceTree = "<group>"; };
 		536F942C66220D8923E05500 /* Pods-IlliniLaundryUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IlliniLaundryUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-IlliniLaundryUITests/Pods-IlliniLaundryUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		6A5E07C52F5C0BAD7F2FE824 /* Pods_IlliniLaundryTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IlliniLaundryTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -256,10 +256,10 @@
 		39C073451E4964B800075ADE /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				39666E521E61487500A507DF /* DormMachines+CoreDataClass.swift */,
-				39666E531E61487500A507DF /* DormMachines+CoreDataProperties.swift */,
-				39666E541E61487500A507DF /* DormStatus+CoreDataClass.swift */,
-				39666E551E61487500A507DF /* DormStatus+CoreDataProperties.swift */,
+				39F3FA3A212DF87C000A1962 /* DormMachines+CoreDataClass.swift */,
+				39F3FA3B212DF87C000A1962 /* DormMachines+CoreDataProperties.swift */,
+				39F3FA36212DF86B000A1962 /* DormStatus+CoreDataClass.swift */,
+				39F3FA37212DF86B000A1962 /* DormStatus+CoreDataProperties.swift */,
 				39C073491E49650D00075ADE /* Dorm.xcdatamodeld */,
 			);
 			name = CoreData;
@@ -564,20 +564,20 @@
 			files = (
 				39C0734D1E49671000075ADE /* CoreDataHelpers.swift in Sources */,
 				390A8E4A1E484AEE00018855 /* ColorHelpers.swift in Sources */,
-				39666E591E61487500A507DF /* DormStatus+CoreDataProperties.swift in Sources */,
+				39F3FA3C212DF87C000A1962 /* DormMachines+CoreDataClass.swift in Sources */,
+				39F3FA39212DF86B000A1962 /* DormStatus+CoreDataProperties.swift in Sources */,
 				390A8E451E48363400018855 /* MyDormsViewController.swift in Sources */,
 				390A8E151E48345700018855 /* LaundryMachinesViewController.swift in Sources */,
 				390A8E431E48362700018855 /* AllDormsViewController.swift in Sources */,
 				390A8E131E48345700018855 /* AppDelegate.swift in Sources */,
 				399C9A0B1E79F51B00C4153A /* GenericDormViewController.swift in Sources */,
+				39F3FA3D212DF87C000A1962 /* DormMachines+CoreDataProperties.swift in Sources */,
 				39A413691E77B09A0013DB7B /* GenericFavoritesDormCell.swift in Sources */,
 				392E5EB41E4863D0006E6C7F /* Constants.swift in Sources */,
-				39666E571E61487500A507DF /* DormMachines+CoreDataProperties.swift in Sources */,
 				39666E511E61437700A507DF /* APIManager.swift in Sources */,
 				39AA0AE31E66A89A00E548D6 /* DormCell.swift in Sources */,
+				39F3FA38212DF86B000A1962 /* DormStatus+CoreDataClass.swift in Sources */,
 				39C073441E48DE1100075ADE /* LaundryMachineCell.swift in Sources */,
-				39666E581E61487500A507DF /* DormStatus+CoreDataClass.swift in Sources */,
-				39666E561E61487500A507DF /* DormMachines+CoreDataClass.swift in Sources */,
 				39C0734B1E49650D00075ADE /* Dorm.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

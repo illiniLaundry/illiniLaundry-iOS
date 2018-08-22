@@ -2,8 +2,9 @@
 //  DormStatus+CoreDataClass.swift
 //  IlliniLaundry
 //
-//  Created by Minhyuk Park on 24/02/2017.
-//  Copyright © 2017 Minhyuk Park. All rights reserved.
+//  Created by Minhyuk Park on 22/08/2018.
+//  Copyright © 2018 Minhyuk Park. All rights reserved.
+//
 //
 
 import Foundation
@@ -11,15 +12,11 @@ import CoreData
 
 
 public class DormStatus: NSManagedObject {
-    
     func update(machines: [DormMachines]) {
-        self.setValue(NSSet(array: machines), forKey: "dormMachines")
+        self.setValue(NSSet(array: machines), forKey: "dorm_machines")
     }
     
-    func initialize(id: Int16, name: String, networked: String, machines: [DormMachines]) {
-        self.id = id
-        self.name = name
-        self.networked = networked
-        self.dormMachines = NSSet(array: machines)
+    func initialize(laundry_room_name: String) {
+        self.laundry_room_name = laundry_room_name
     }
 }

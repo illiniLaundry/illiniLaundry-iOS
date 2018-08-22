@@ -1,42 +1,41 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11759" systemVersion="16D32" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13772" systemVersion="16G29" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="DormMachines" representedClassName=".DormMachines" syncable="YES">
-        <attribute name="description_" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="dormName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="appliance_desc_key" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="appliance_type" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="avg_cycle_time" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="label" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="port" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES">
+        <attribute name="lrm_status" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="out_of_service" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES">
             <userInfo>
                 <entry key="hyper.isPrimaryKey" value="true"/>
             </userInfo>
         </attribute>
-        <attribute name="startTime" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="timeRemaining" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="uniqueID" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="dormStatus" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DormStatus" inverseName="dormMachines" inverseEntity="DormStatus" syncable="YES"/>
+        <attribute name="time_remaining" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="unique_id" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="dorm_status" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DormStatus" inverseName="dorm_machines" inverseEntity="DormStatus" syncable="YES"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
-                <constraint value="uniqueID"/>
+                <constraint value="unique_id"/>
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
     <entity name="DormStatus" representedClassName=".DormStatus" syncable="YES">
-        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES">
+        <attribute name="laundry_room_name" optional="YES" attributeType="String" syncable="YES">
             <userInfo>
                 <entry key="hyper.isPrimaryKey" value="true"/>
             </userInfo>
         </attribute>
-        <attribute name="networked" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="dormMachines" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DormMachines" inverseName="dormStatus" inverseEntity="DormMachines" syncable="YES"/>
+        <relationship name="dorm_machines" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DormMachines" inverseName="dorm_status" inverseEntity="DormMachines" syncable="YES"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
-                <constraint value="name"/>
+                <constraint value="laundry_room_name"/>
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
     <elements>
-        <element name="DormMachines" positionX="268" positionY="243" width="128" height="180"/>
-        <element name="DormStatus" positionX="52" positionY="261" width="128" height="103"/>
+        <element name="DormMachines" positionX="268" positionY="243" width="128" height="195"/>
+        <element name="DormStatus" positionX="52" positionY="261" width="128" height="75"/>
     </elements>
 </model>
