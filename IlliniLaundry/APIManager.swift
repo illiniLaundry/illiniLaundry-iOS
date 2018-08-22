@@ -9,6 +9,7 @@
 import Foundation
 import Alamofire
 import SwiftyJSON
+import SWXMLHash
 
 class APIManager {
     static let shared = APIManager()
@@ -39,17 +40,14 @@ class APIManager {
     }
     
     
-    private func performRequest(method: HTTPMethod, parameters: [String: Any]?, headers: [String: String]? = nil, success: ((JSON) -> Void)?, failure: ((Error) -> Void)?) {
+    private func performRequest(method: HTTPMethod, parameters: [String: Any]?, headers: [String: String]? = nil, success: ((var) -> Void)?, failure: ((Error) -> Void)?) {
         let url = LAUNDRY_URL
-        Alamofire.request(url, method: method, parameters: parameters, encoding: JSONEncoding.default, headers: headers).responseJSON { (reponse) in
-            
-            if reponse.result.isSuccess {
-                let json = JSON(reponse.result.value!)
-                success?(json)
-            }
-            
-            if reponse.result.isFailure {
-                failure?(reponse.result.error!)
+        Alamofire.request(url, method: method, parameters: parameters).response { response in
+            if let error = response.error {
+                failure(error!)
+            } else {
+                var xml = SWXMLHash.parse(response.data!)
+                success(xml)
             }
         }
     }
