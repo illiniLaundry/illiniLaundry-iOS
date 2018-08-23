@@ -16,7 +16,8 @@ public class DormStatus: NSManagedObject {
         self.setValue(NSSet(array: machines), forKey: "dorm_machines")
     }
     
-    func initialize(laundry_room_name: String) {
+    func initialize(laundry_room_name: String, machines: [DormMachines]) {
         self.laundry_room_name = laundry_room_name
+        self.dorm_machines = NSSet(array: machines)
     }
 }

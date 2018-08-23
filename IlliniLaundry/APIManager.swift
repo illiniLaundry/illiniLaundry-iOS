@@ -21,15 +21,16 @@ class APIManager {
     
     private init() { }
     
-    func getAllStatus(success: ((JSON) -> Void)?, failure: ((Error) -> Void)?) {
-        performRequest(method: .get, parameters: nil, success: success, failure: failure)
+    func getAllStatus(success: @escaping ((XMLIndexer) -> Void), failure: @escaping ((Error) -> Void)) {
+        var url = "for loop through dorm ids"
+        performRequest(url: url, method: .get, parameters: nil, success: success, failure: failure)
     }
     
-    func getAllStatusSuccess(json: JSON){
+    func getAllStatusSuccess(xml: XMLIndexer){
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let privateContext = appDelegate.privateContext
         privateContext.perform {
-            CoreDataHelpers.updateAll(json: json) { () -> () in
+            CoreDataHelpers.updateAll(xml: xml) { () -> () in
             }
         }
 
@@ -40,25 +41,26 @@ class APIManager {
     }
     
     
-    private func performRequest(method: HTTPMethod, parameters: [String: Any]?, headers: [String: String]? = nil, success: ((var) -> Void)?, failure: ((Error) -> Void)?) {
-        let url = LAUNDRY_URL
+    private func performRequest(url: String, method: HTTPMethod, parameters: [String: Any]?, headers: [String: String]? = nil, success: @escaping ((XMLIndexer) -> Void), failure: @escaping ((Error) -> Void)) {
         Alamofire.request(url, method: method, parameters: parameters).response { response in
             if let error = response.error {
-                failure(error!)
+                failure(error)
             } else {
-                var xml = SWXMLHash.parse(response.data!)
+                let xml = SWXMLHash.parse(response.data!)
                 success(xml)
             }
         }
     }
-    func getSingleDormStatus(success: ((JSON) -> Void)?, failure: ((Error) -> Void)?) {
+    /*
+    func getSingleDormStatus(success: ((XMLIndexer) -> Void), failure: ((Error) -> Void)) {
         performRequest(method: .get, parameters: nil, success: success, failure: failure)
     }
     
-    func getSingleDormStatusSuccess(json: JSON) {
-        CoreDataHelpers.updateSingleDorm(dormName: <#String#>, json: json) { () -> () in
+    func getSingleDormStatusSuccess(xml: XMLIndexer) {
+        CoreDataHelpers.updateSingleDorm(dormName: dormName, json: json) { () -> () in
         }
     }
+    */
     
     // MARK: add supoort
     

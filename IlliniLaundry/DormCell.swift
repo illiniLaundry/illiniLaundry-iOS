@@ -19,7 +19,7 @@ class DormCell: UICollectionViewCell {
     }
     
     func configure(dorm: DormStatus) {
-        self.dormImageView.image = UIImage(named: dorm.name)
-        self.dormLabel.text = dorm.name
+        self.dormImageView.image = UIImage(named: dorm.laundry_room_name)
+        self.dormLabel.text = dorm.laundry_room_name
     }
 }

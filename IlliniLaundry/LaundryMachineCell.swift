@@ -22,9 +22,9 @@ class LaundryMachineCell: UITableViewCell {
     
     func configure(dorm: DormMachines) {
         self.numberLabel.text = dorm.label.description
-        self.typeLabel.text = dorm.description_
+        self.typeLabel.text = "type label"
         self.statusLabel.text = dorm.status
-        self.timeRemainingLabel.text = dorm.timeRemaining
+        self.timeRemainingLabel.text = dorm.time_remaining
         
         if(dorm.status != "Available") {
             let background = UIView(frame: self.frame)

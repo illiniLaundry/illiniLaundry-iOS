@@ -8,17 +8,19 @@
 import Foundation
 import CoreData
 import SwiftyJSON
+import SWXMLHash
 
 class CoreDataHelpers {
     
     static let appDelegate = UIApplication.shared.delegate as! AppDelegate
     static let privateContext = appDelegate.privateContext
     
-    class func updateAll(json : JSON, completion: ()->() ) {
+    class func updateAll(xml : XMLIndexer, completion: ()->() ) {
         let dateFormatter = DateFormatter();
         dateFormatter.locale = Locale(identifier: "en_US")
         dateFormatter.dateFormat = "yyyy-mm-dd hh:mm:ss"
-        
+        print(xml)
+        /*
         let dormStatuses = json["location"]["rooms"]
 
         
@@ -44,8 +46,9 @@ class CoreDataHelpers {
             _ = self.createDormStatus(id: id, name: name, networked: networked, machines: tempMachines)
         }
         completion()
+        */
     }
-    
+    /*
     class func updateSingleDorm(dormName: String, json: JSON, completion: ()->() ) {
         let dateFormatter = DateFormatter();
         dateFormatter.locale = Locale(identifier: "en_US")
@@ -78,16 +81,17 @@ class CoreDataHelpers {
         }
         completion()
     }
+    */
     
-    class func createDormMachine(port: Int16, label: Int16, description: String, status: String, startTime: Date, timeRemaining: String, uniqueID: String, dormName: String) -> DormMachines {
+    class func createDormMachine(unique_id: String, time_remaining: String, status: String, out_of_service: Int16, lrm_status: String, label: Int16, avg_cycle_time: Int32, appliance_type: String, appliance_desc_key: Int32) -> DormMachines {
         let fetchRequest = NSFetchRequest<DormMachines>(entityName: "DormMachines")
-        fetchRequest.predicate = NSPredicate(format: "uniqueID == %@", uniqueID)
+        fetchRequest.predicate = NSPredicate(format: "unique_id == %@", unique_id)
 
         // TODO: check if setValue is different from update
         if let dormMachines = try? privateContext.fetch(fetchRequest) {
             if dormMachines.count > 0 {
-                dormMachines[0].setValue(timeRemaining, forKey: "timeRemaining")
-                dormMachines[0].setValue(startTime, forKey: "startTime")
+                dormMachines[0].setValue(time_remaining, forKey: "time_remaining")
+                // dormMachines[0].setValue(startTime, forKey: "startTime")
 //                dormMachines[0].update(startTime: startTime, timeRemaining: timeRemaining)
 //                print(timeRemaining)
                 return dormMachines[0];
@@ -95,7 +99,7 @@ class CoreDataHelpers {
         }
         
         let machine = NSEntityDescription.insertNewObject(forEntityName: "DormMachines", into: privateContext) as! DormMachines
-        machine.initialize(port: port, label: label, description: description, status: status, startTime: startTime, timeRemaining: timeRemaining, uniqueID: uniqueID, dormName: dormName)
+        machine.initialize(label: label, out_of_service: out_of_service, status: status, appliance_type: appliance_type, lrm_status: lrm_status, appliance_desc_key: appliance_desc_key, avg_cycle_time: avg_cycle_time, time_remaining: time_remaining, unique_id: unique_id)
         do {
             try privateContext.save()
         } catch let error as NSError {
@@ -105,20 +109,20 @@ class CoreDataHelpers {
         
     }
     
-    class func createDormStatus(id: Int16, name: String, networked: String, machines: [DormMachines]) -> DormStatus{
+    class func createDormStatus(laundry_room_name: String, machines: [DormMachines]) -> DormStatus{
         let fetchRequest = NSFetchRequest<DormStatus>(entityName: "DormStatus")
-        fetchRequest.predicate = NSPredicate(format: "id == %@", NSNumber(value: id))
+        fetchRequest.predicate = NSPredicate(format: "laundry_room_name == %@", laundry_room_name)
         // TODO: check if setValue is different from update
         if let dormStatuses = try? privateContext.fetch(fetchRequest) {
             if dormStatuses.count > 0 {
-                dormStatuses[0].setValue(NSSet(array: machines), forKey: "dormMachines")
+                dormStatuses[0].setValue(NSSet(array: machines), forKey: "dorm_machines")
 //                dormStatuses[0].update(machines: machines)
                 return dormStatuses[0];
             }
         }
         
         let status = NSEntityDescription.insertNewObject(forEntityName: "DormStatus", into: privateContext) as! DormStatus
-        status.initialize(id: id, name: name, networked: networked, machines: machines)
+        status.initialize(laundry_room_name: laundry_room_name, machines: machines)
         do {
             try privateContext.save()
         } catch let error as NSError {

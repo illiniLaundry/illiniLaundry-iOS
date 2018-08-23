@@ -25,6 +25,7 @@ public class DormMachines: NSManagedObject {
         self.appliance_desc_key = appliance_desc_key
         self.avg_cycle_time = avg_cycle_time
         self.time_remaining = time_remaining
-        self.unique_id = self.dorm_status.laundry_room_name + String(self.appliance_desc_key)
+        self.unique_id = unique_id
+        // self.unique_id = self.dorm_status.laundry_room_name + String(self.appliance_desc_key)
     }
 }

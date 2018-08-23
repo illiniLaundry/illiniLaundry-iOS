@@ -146,7 +146,7 @@ class AllDormsViewController: UIViewController, UICollectionViewDelegate, UIColl
         
         //GenericDormViewController.dormNameStatic = fetchedResultsController.object(at: indexPath).name
         let dormView = UIStoryboard(name:"GenericDorm", bundle: nil).instantiateViewController(withIdentifier: "genericDormViewController") as! GenericDormViewController;
-        GenericDormViewController.dormNameStatic = fetchedResultsController.object(at: indexPath).name
+        GenericDormViewController.dormNameStatic = fetchedResultsController.object(at: indexPath).laundry_room_name
         self.present(dormView, animated:true, completion:nil);
     }
     

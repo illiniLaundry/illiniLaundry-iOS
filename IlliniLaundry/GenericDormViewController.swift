@@ -243,7 +243,7 @@ extension GenericDormViewController: UITableViewDelegate, UITableViewDataSource 
                 let dormMachine = laundryMachinesFetchedResultsController.object(at: updateIndexPath)
             
                 if let cell = cell as? LaundryMachineCell {
-                    cell.timeRemainingLabel.text = dormMachine.timeRemaining
+                    cell.timeRemainingLabel.text = dormMachine.time_remaining
                 }
             
                 laundryMachinesTableView.reloadRows(at: [updateIndexPath], with: .fade)
@@ -269,7 +269,7 @@ extension GenericDormViewController: UITableViewDelegate, UITableViewDataSource 
                 let dormMachine = dryersFetchedResultsController.object(at: updateIndexPath)
                 
                 if let cell = cell as? LaundryMachineCell {
-                    cell.timeRemainingLabel.text = dormMachine.timeRemaining
+                    cell.timeRemainingLabel.text = dormMachine.time_remaining
                 }
                 
                 dryersTableView.reloadRows(at: [updateIndexPath], with: .fade)
