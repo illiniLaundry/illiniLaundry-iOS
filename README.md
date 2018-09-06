@@ -1,5 +1,5 @@
 # IlliniLaundry - iOS version
-![](https://img.shields.io/badge/maintained%3F-no!-red.svg?style=flat)
+![](https://img.shields.io/badge/maintained%3F-yes!-green.svg?style=flat)
 
 Tired of checking the laundryalert website? Try out IlliniLaundry!
 
